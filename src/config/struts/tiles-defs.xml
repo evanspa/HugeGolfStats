@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+		"-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+		"http://struts.apache.org/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+
+	<!-- main layout definition -->
+	<definition name=".baseLayout" path="/jsp/common/layouts/classicLayout.jsp">
+		<put name="head" value="/jsp/common/head.jsp"/>
+		<put name="menubar" value="/jsp/common/menubar.jsp"/>
+		<put name="footer" value="/jsp/common/footer.jsp"/>
+		<put name="errors" value="/jsp/common/errors.jsp"/>
+		<put name="body-content" value="/jsp/common/body.jsp"/>
+	</definition>
+
+	<!-- secure main layout definition -->
+	<definition name=".mainLayout" extends=".baseLayout">
+	</definition>
+
+	<!-- secure main layout definition -->
+	<definition name=".secureMainLayout" extends=".baseLayout">
+	</definition>
+
+	<!-- Exception-caught screen -->
+	<definition name=".view.exceptioncaught" extends=".secureMainLayout">
+		<put name="title" value="title.errorcaught"/>
+		<put name="body-content" value="/jsp/exceptioncaught.jsp"/>
+	</definition>
+
+	<!-- welcome screen -->
+	<definition name=".view.welcome" extends=".mainLayout">
+		<put name="title" value="title.welcome"/>
+		<put name="body-content" value="/jsp/welcome.jsp"/>
+	</definition>
+
+	<!-- Terms of use screen -->
+	<definition name=".view.termsofuse" extends=".mainLayout">
+		<put name="title" value="title.termsofuse"/>
+		<put name="body-content" value="/jsp/termsofuse.jsp"/>
+	</definition>
+
+
+	<!-- Privacy Notice  screen -->
+	<definition name=".view.privacynotice" extends=".mainLayout">
+		<put name="title" value="title.privacynotice"/>
+		<put name="body-content" value="/jsp/privacynotice.jsp"/>
+	</definition>
+
+	<!-- take-tour screen -->
+	<definition name=".view.taketour" extends=".mainLayout">
+		<put name="title" value="title.taketour"/>
+		<put name="body-content" value="/jsp/taketour.jsp"/>
+	</definition>
+
+	<!-- view-screenshot screen -->
+	<definition name=".view.viewscreenshot" path="/jsp/view-screenshot.jsp">
+		<put name="head" value="/jsp/common/head.jsp"/>
+		<put name="title" value="title.viewscreenshot"/>
+	</definition>
+
+	<!-- FAQ screen -->
+	<definition name=".view.faq" extends=".mainLayout">
+		<put name="title" value="title.faq"/>
+		<put name="body-content" value="/jsp/faq.jsp"/>
+	</definition>
+
+	<!-- Acknowledgements screen -->
+	<definition name=".view.acknowledgements" extends=".mainLayout">
+		<put name="title" value="title.acknowledgements"/>
+		<put name="body-content" value="/jsp/acknowledgements.jsp"/>
+	</definition>
+
+	<!-- Contact Us screen -->
+	<definition name=".view.contactus" extends=".mainLayout">
+		<put name="title" value="title.contactus"/>
+		<put name="body-content" value="/jsp/contactus.jsp"/>
+		<put name="formActionPrefix" value="" />
+	</definition>
+
+	<!-- Contact Us - submitted screen -->
+	<definition name=".view.contactus-submitted" extends=".mainLayout">
+		<put name="title" value="title.contactus-submitted"/>
+		<put name="body-content" value="/jsp/contactus-submitted.jsp"/>
+	</definition>
+	
+	<!-- Contact Us screen -->
+	<definition name=".view.secure-contactus" extends=".mainLayout">
+		<put name="title" value="title.contactus"/>
+		<put name="formActionPrefix" value="/secure" />
+		<put name="body-content" value="/jsp/contactus.jsp"/>
+	</definition>
+
+	<!-- Contact Us - submitted screen -->
+	<definition name=".view.secure-contactus-submitted" extends=".mainLayout">
+		<put name="title" value="title.contactus-submitted"/>
+		<put name="body-content" value="/jsp/contactus-submitted.jsp"/>
+	</definition>
+
+	<!-- welcome screen when logged-in -->
+	<definition name=".view.welcome-secure" extends=".secureMainLayout">
+		<put name="title" value="title.welcome"/>
+		<put name="body-content" value="/jsp/welcome.jsp"/>
+	</definition>
+
+	<!-- view-statistics screen -->
+	<definition name=".view.view-statistics" extends=".secureMainLayout">
+		<put name="title" value="title.viewstatistics"/>
+		<put name="body-content" value="/jsp/secure/player/view-statistics.jsp"/>
+	</definition>
+
+	<!-- login screen -->
+	<definition name=".view.login" extends=".mainLayout">
+		<put name="title" value="title.login"/>
+		<put name="body-content" value="/jsp/login.jsp"/>
+	</definition>
+
+	<!-- forgot userid screen - Page 1 -->
+	<definition name=".view.forgotuserid" extends=".mainLayout">
+		<put name="title" value="title.forgotuserid"/>
+		<put name="body-content" value="/jsp/forgotuserid.jsp"/>
+	</definition>
+
+	<!-- forgot userid submit-screen - invalid inputs - Page 1 -->
+	<definition name=".view.forgotuserid-invalidinputs" extends=".mainLayout">
+		<put name="title" value="title.forgotuserid-invalidinputs"/>
+		<put name="body-content" value="/jsp/forgotuserid-invalidinputs.jsp"/>
+	</definition>
+
+	<!-- forgot userid submit-screen - valid inputs - Page 1 -->
+	<definition name=".view.forgotuserid-validinputs" extends=".mainLayout">
+		<put name="title" value="title.forgotuserid-validinputs"/>
+		<put name="body-content" value="/jsp/forgotuserid-validinputs.jsp"/>
+	</definition>
+
+	<!-- forgot password screen - Page 1 -->
+	<definition name=".view.forgotpassword" extends=".mainLayout">
+		<put name="title" value="title.forgotpassword"/>
+		<put name="body-content" value="/jsp/forgotpassword.jsp"/>
+	</definition>
+
+	<!-- forgot password submit-screen - invalid inputs - Page 1 -->
+	<definition name=".view.forgotpassword-invalidinputs" extends=".mainLayout">
+		<put name="title" value="title.forgotpassword-invalidinputs"/>
+		<put name="body-content" value="/jsp/forgotpassword-invalidinputs.jsp"/>
+	</definition>
+
+	<!-- forgot password submit-screen - valid inputs - Page 1 -->
+	<definition name=".view.forgotpassword-validinputs" extends=".mainLayout">
+		<put name="title" value="title.forgotpassword-validinputs"/>
+		<put name="body-content" value="/jsp/forgotpassword-validinputs.jsp"/>
+	</definition>
+
+	<!-- failed-login screen -->
+	<definition name=".view.loginfailed" extends=".mainLayout">
+		<put name="title" value="title.failedlogin"/>
+		<put name="body-content" value="/jsp/loginfailed.jsp"/>
+	</definition>
+
+	<!-- signup screen -->
+	<definition name=".view.createaccount" extends=".mainLayout">
+		<put name="title" value="title.createaccount"/>
+		<put name="body-content" value="/jsp/createaccount.jsp"/>
+	</definition>
+
+	<!-- edit profile screens (secure) -->
+	<definition name=".view.viewprofile" extends=".secureMainLayout">
+		<put name="title" value="title.viewprofile"/>
+		<put name="body-content" value="/jsp/secure/player/viewprofile.jsp"/>
+	</definition>
+	<definition name=".view.editpersonalinfo" extends=".secureMainLayout">
+		<put name="title" value="title.editprofile.personalinfo"/>
+		<put name="body-content" value="/jsp/secure/player/profile/editprofile-personalinfo.jsp"/>
+	</definition>
+	<definition name=".view.editscorecard" extends=".secureMainLayout">
+		<put name="title" value="title.editprofile.scorecard"/>
+		<put name="body-content" value="/jsp/secure/player/profile/editprofile-scorecard.jsp"/>
+	</definition>
+	<definition name=".view.editaccountinfo" extends=".secureMainLayout">
+		<put name="title" value="title.editprofile.accountinfo"/>
+		<put name="body-content" value="/jsp/secure/player/profile/editprofile-accountinfo.jsp"/>
+	</definition>
+	<definition name=".view.edithomecourse" extends=".secureMainLayout">
+		<put name="title" value="title.editprofile.homecourse"/>
+		<put name="body-content" value="/jsp/secure/player/profile/editprofile-homecourse.jsp"/>
+	</definition>
+	<definition name=".view.editplayinghabits" extends=".secureMainLayout">
+		<put name="title" value="title.editprofile.playinghabits"/>
+		<put name="body-content" value="/jsp/secure/player/profile/editprofile-playinghabits.jsp"/>
+	</definition>
+
+	<!-- profiled-saved - display screen (secure) -->
+	<definition name=".view.profilesaved-display" extends=".secureMainLayout">
+		<put name="title" value="title.profilesaved"/>
+		<put name="body-content" value="/jsp/secure/player/profilesaved-display.jsp"/>
+	</definition>
+
+	<!-- profiled-saved - redirect to display-screen (secure) -->
+	<definition name=".view.profilesaved-redirect"
+				path="/jsp/secure/player/profilesaved-redirect.jsp"/>
+
+	<!-- account created - display screen -->
+	<definition name=".view.accountcreated-display" extends=".mainLayout">
+		<put name="title" value="title.accountcreated"/>
+		<put name="body-content" value="/jsp/accountcreated-display.jsp"/>
+	</definition>
+
+	<!-- account cretaed - redirect to display-screen -->
+	<definition name=".view.accountcreated-redirect"
+				path="/jsp/accountcreated-redirect.jsp"/>
+
+	<!-- member home screen (secure) -->
+	<definition name=".view.memberhome" extends=".secureMainLayout">
+		<put name="title" value="title.statisticssummary"/>
+		<put name="body-content" value="/jsp/secure/memberhome.jsp"/>
+	</definition>
+
+	<!-- handicap summary screen (secure) -->
+	<definition name=".view.handicapsummary" extends=".secureMainLayout">
+		<put name="title" value="title.handicapsummary"/>
+		<put name="body-content" value="/jsp/secure/player/handicapsummary.jsp"/>
+	</definition>
+
+	<!-- recent-rounds screen (secure) -->
+	<definition name=".view.recentrounds" extends=".secureMainLayout">
+		<put name="title" value="title.recentrounds"/>
+		<put name="body-content" value="/jsp/secure/player/recentrounds.jsp"/>
+	</definition>
+
+	<!--  START ADMIN DEFINITIONS =============================================== -->
+	<!-- admin-home screen -->
+	<definition name=".view.admin" extends=".secureMainLayout">
+		<put name="title" value="title.admin"/>
+		<put name="body-content" value="/jsp/secure/admin/home.jsp"/>
+	</definition>
+
+	<!-- admin usage summary screen -->
+	<definition name=".view.admin.usagesummary" extends=".secureMainLayout">
+		<put name="title" value="title.admin.usagesummary"/>
+		<put name="body-content" value="/jsp/secure/admin/usagesummary.jsp"/>
+	</definition>
+
+	<!-- admin message broadcast screen -->
+	<definition name=".view.admin.messagebroadcast" extends=".secureMainLayout">
+		<put name="title" value="title.admin.messagebroadcast"/>
+		<put name="body-content" value="/jsp/secure/admin/messagebroadcast.jsp"/>
+	</definition>
+
+	<!-- admin message broadcast screen -->
+	<definition name=".view.admin.messagebroadcast-sent" extends=".secureMainLayout">
+		<put name="title" value="title.admin.messagebroadcast-sent"/>
+		<put name="body-content" value="/jsp/secure/admin/messagebroadcast-sent.jsp"/>
+	</definition>
+
+	<!-- admin view environment variables screen -->
+	<definition name=".view.admin.viewsysteminfo" extends=".secureMainLayout">
+		<put name="title" value="title.admin.viewsysteminfo"/>
+		<put name="body-content" value="/jsp/secure/admin/systeminfo.jsp"/>
+	</definition>
+
+	<!-- view player screen - search (secure) -->
+	<definition name=".view.admin.viewplayer-search" extends=".secureMainLayout">
+		<put name="title" value="title.admin.viewplayer.search"/>
+		<put name="body-content" value="/jsp/secure/admin/viewplayer-search.jsp"/>
+	</definition>
+
+	<!-- view player screen - search results (secure) -->
+	<definition name=".view.admin.viewplayer-search-results" extends=".secureMainLayout">
+		<put name="title" value="title.admin.viewplayer.searchresults"/>
+		<put name="body-content" value="/jsp/secure/admin/viewplayer-search-results.jsp"/>
+	</definition>
+
+	<!--  START TEAM DEFINITIONS =============================================== -->
+	<!-- teams-home screen -->
+	<definition name=".view.teams" extends=".secureMainLayout">
+		<put name="title" value="title.teams"/>
+		<put name="body-content" value="/jsp/secure/team/home.jsp"/>
+	</definition>
+
+	<!-- create team page-1 screen -->
+	<definition name=".view.createteam-page1" extends=".secureMainLayout">
+		<put name="title" value="title.createteam.page1"/>
+		<put name="body-content" value="/jsp/secure/team/createteam-page1.jsp"/>
+	</definition>
+
+	<!-- create team page-2 screen -->
+	<definition name=".view.createteam-page2" extends=".secureMainLayout">
+		<put name="title" value="title.createteam.page2"/>
+		<put name="body-content" value="/jsp/secure/team/createteam-page2.jsp"/>
+	</definition>
+
+	<!-- START COURSE DEFINITIONS ============================================== -->
+
+	<!-- courses-home screen -->
+	<definition name=".view.courses" extends=".secureMainLayout">
+		<put name="title" value="title.courses"/>
+		<put name="body-content" value="/jsp/secure/course/courses.jsp"/>
+	</definition>
+
+	<!-- add course screen - Page 1 (secure) -->
+	<definition name=".view.addcourse-page1" extends=".secureMainLayout">
+		<put name="title" value="title.addcourse"/>
+		<put name="body-content" value="/jsp/secure/course/addcourse-page1.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/course/breadcrumbs/add/page1.jsp"/>
+	</definition>
+
+	<!-- add course screen - Page 2 (secure) -->
+	<definition name=".view.addcourse-page2" extends=".secureMainLayout">
+		<put name="title" value="title.addcourse.inputholes"/>
+		<put name="body-content" value="/jsp/secure/course/addcourse-page2.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/course/breadcrumbs/add/page2.jsp"/>
+	</definition>
+
+	<!-- add course screen - potential duplicates found (secure) -->
+	<definition name=".view.addcourse-potentialdupsfound" extends=".secureMainLayout">
+		<put name="title" value="title.addcourse.potentialduplicates"/>
+		<put name="body-content" value="/jsp/secure/course/addcourse-potentialduplicates.jsp"/>
+	</definition>
+
+	<!-- add course screen - Page 3 (secure) -->
+	<definition name=".view.addcourse-page3" extends=".secureMainLayout">
+		<put name="title" value="title.addcourse.confirminput"/>
+		<put name="body-content" value="/jsp/secure/course/addcourse-page3.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/course/breadcrumbs/add/page3.jsp"/>
+	</definition>
+
+	<!-- add course screen - complete - redirect to display-screen (secure) -->
+	<definition name=".view.addcourse-complete-redirect"
+				path="/jsp/secure/course/addcourse-complete-redirect.jsp"/>
+
+	<!-- add course screen - complete - display (secure) -->
+	<definition name=".view.addcourse-complete-display" extends=".secureMainLayout">
+		<put name="title" value="title.addcourse.coursesaved"/>
+		<put name="body-content" value="/jsp/secure/course/addcourse-complete-display.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/course/breadcrumbs/add/end.jsp"/>
+	</definition>
+
+	<!-- view course screen - search (secure) -->
+	<definition name=".view.viewcourse-search" extends=".secureMainLayout">
+		<put name="title" value="title.viewcourse.search"/>
+		<put name="body-content" value="/jsp/secure/course/viewcourse-search.jsp"/>
+	</definition>
+
+	<!-- view course screen - search results (secure) -->
+	<definition name=".view.viewcourse-search-results" extends=".secureMainLayout">
+		<put name="title" value="title.viewcourse.searchresults"/>
+		<put name="body-content" value="/jsp/secure/course/viewcourse-search-results.jsp"/>
+	</definition>
+
+	<!-- view course screen - Page 1 (secure) -->
+	<definition name=".view.viewcourse-page1" extends=".secureMainLayout">
+		<put name="title" value="title.viewcourse"/>
+		<put name="body-content" value="/jsp/secure/course/viewcourse-page1.jsp"/>
+	</definition>
+
+	<!-- edit course screen - search (secure) -->
+	<definition name=".view.editcourse-search" extends=".secureMainLayout">
+		<put name="title" value="title.editcourse.search"/>
+		<put name="body-content" value="/jsp/secure/course/editcourse-search.jsp"/>
+	</definition>
+
+	<!-- edit course screen - search results (secure) -->
+	<definition name=".view.editcourse-search-results" extends=".secureMainLayout">
+		<put name="title" value="title.editcourse.searchresults"/>
+		<put name="body-content" value="/jsp/secure/course/editcourse-search-results.jsp"/>
+	</definition>
+
+	<!-- edit course screen - Page 1 (secure) -->
+	<definition name=".view.editcourse-page1" extends=".secureMainLayout">
+		<put name="title" value="title.editcourse"/>
+		<put name="body-content" value="/jsp/secure/course/editcourse-page1.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/course/breadcrumbs/edit/page1.jsp"/>
+	</definition>
+
+	<!-- edit course screen - Page 2 (secure) -->
+	<definition name=".view.editcourse-page2" extends=".secureMainLayout">
+		<put name="title" value="title.editcourse.inputholes"/>
+		<put name="body-content" value="/jsp/secure/course/editcourse-page2.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/course/breadcrumbs/edit/page2.jsp"/>
+	</definition>
+
+	<!-- edit course screen - Page 3 (secure) -->
+	<definition name=".view.editcourse-page3" extends=".secureMainLayout">
+		<put name="title" value="title.editcourse.confirminput"/>
+		<put name="body-content" value="/jsp/secure/course/editcourse-page3.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/course/breadcrumbs/edit/page3.jsp"/>
+	</definition>
+
+	<!-- edit course screen - complete - redirect to display-screen (secure) -->
+	<definition name=".view.editcourse-complete-redirect"
+				path="/jsp/secure/course/editcourse-complete-redirect.jsp"/>
+
+	<!-- edit course screen - complete - display (secure) -->
+	<definition name=".view.editcourse-complete-display" extends=".secureMainLayout">
+		<put name="title" value="title.editcourse.coursesaved"/>
+		<put name="body-content" value="/jsp/secure/course/editcourse-complete-display.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/course/breadcrumbs/edit/end.jsp"/>
+	</definition>
+
+	<!-- END COURSE DEFINITIONS ================================================ -->
+
+
+	<!-- START ROUND DEFINITIONS ================================================ -->
+
+	<!-- rounds-home screen -->
+	<definition name=".view.rounds" extends=".secureMainLayout">
+		<put name="title" value="title.rounds"/>
+		<put name="body-content" value="/jsp/secure/round/rounds.jsp"/>
+	</definition>
+
+	<!-- post round screen - Page 1 (secure) -->
+	<definition name=".view.postround-page1" extends=".secureMainLayout">
+		<put name="title" value="title.postround"/>
+		<put name="body-content" value="/jsp/secure/round/postround-page1.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/post/page1.jsp"/>
+	</definition>
+
+	<!-- post round screen - Page 2 (secure) -->
+	<definition name=".view.postround-page2" extends=".secureMainLayout">
+		<put name="title" value="title.postround.inputholes"/>
+		<put name="body-content" value="/jsp/secure/round/postround-page2.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/post/page2.jsp"/>
+		<!--<put type="string" name="layouttype" value="1" />-->
+	</definition>
+	<definition name=".view.nostats-postround-page2" extends=".secureMainLayout">
+		<put name="title" value="title.postround.inputholes"/>
+		<put name="body-content" value="/jsp/secure/round/nostats-postround-page2.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/post/nostats/page2.jsp"/>
+	</definition>
+
+	<!-- post round screen - Page 3 (secure) -->
+	<definition name=".view.postround-page3" extends=".secureMainLayout">
+		<put name="title" value="title.postround.confirminput"/>
+		<put name="body-content" value="/jsp/secure/round/postround-page3.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/post/page3.jsp"/>
+	</definition>
+
+	<!-- post round screen - complete - redirect to display-screen (secure) -->
+	<definition name=".view.postround-complete-redirect"
+				path="/jsp/secure/round/postround-complete-redirect.jsp"/>
+	<definition name=".view.nostats-postround-complete-redirect"
+				path="/jsp/secure/round/nostats-postround-complete-redirect.jsp"/>
+
+	<!-- post round screen - complete - display (secure) -->
+	<definition name=".view.postround-complete-display" extends=".secureMainLayout">
+		<put name="title" value="title.postround.roundsaved"/>
+		<put name="body-content" value="/jsp/secure/round/postround-complete-display.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/post/end.jsp"/>
+	</definition>
+	<definition name=".view.nostats-postround-complete-display" extends=".secureMainLayout">
+		<put name="title" value="title.postround.roundsaved"/>
+		<put name="body-content" value="/jsp/secure/round/nostats-postround-complete-display.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/post/nostats/end.jsp"/>
+	</definition>
+
+	<!-- edit round screen - search (secure) -->
+	<definition name=".view.editround-search" extends=".secureMainLayout">
+		<put name="title" value="title.editround.search"/>
+		<put name="body-content" value="/jsp/secure/round/editround-search.jsp"/>
+	</definition>
+
+	<!-- edit round screen - search results (secure) -->
+	<definition name=".view.editround-search-results" extends=".secureMainLayout">
+		<put name="title" value="title.editround.searchresults"/>
+		<put name="body-content" value="/jsp/secure/round/editround-search-results.jsp"/>
+	</definition>
+
+	<!-- edit round screen - Page 1 (secure) -->
+	<definition name=".view.editround-page1" extends=".secureMainLayout">
+		<put name="title" value="title.editround"/>
+		<put name="body-content" value="/jsp/secure/round/editround-page1.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/edit/page1.jsp"/>
+	</definition>
+
+	<!-- edit round screen - Page 2 (secure) -->
+	<definition name=".view.editround-page2" extends=".secureMainLayout">
+		<put name="title" value="title.editround.inputholes"/>
+		<put name="body-content" value="/jsp/secure/round/editround-page2.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/edit/page2.jsp"/>
+	</definition>
+	<!-- edit round screen, no stats - Page 2 (secure) -->
+	<definition name=".view.nostats-editround-page2" extends=".secureMainLayout">
+		<put name="title" value="title.editround.inputholes"/>
+		<put name="body-content" value="/jsp/secure/round/nostats-editround-page2.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/edit/nostats/page2.jsp"/>
+	</definition>
+
+	<!-- edit round screen - Page 3 (secure) -->
+	<definition name=".view.editround-page3" extends=".secureMainLayout">
+		<put name="title" value="title.editround.confirminput"/>
+		<put name="body-content" value="/jsp/secure/round/editround-page3.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/edit/page3.jsp"/>
+	</definition>
+
+	<!-- edit round screen - complete - redirect to display-screen (secure) -->
+	<definition name=".view.editround-complete-redirect"
+				path="/jsp/secure/round/editround-complete-redirect.jsp"/>
+	<definition name=".view.nostats-editround-complete-redirect"
+				path="/jsp/secure/round/nostats-editround-complete-redirect.jsp"/>
+
+	<!-- edit round screen - complete - display (secure) -->
+	<definition name=".view.editround-complete-display" extends=".secureMainLayout">
+		<put name="title" value="title.editround.roundsaved"/>
+		<put name="body-content" value="/jsp/secure/round/editround-complete-display.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/edit/end.jsp"/>
+	</definition>
+	<definition name=".view.nostats-editround-complete-display" extends=".secureMainLayout">
+		<put name="title" value="title.editround.roundsaved"/>
+		<put name="body-content" value="/jsp/secure/round/nostats-editround-complete-display.jsp"/>
+		<put name="breadcrumbs" value="/jsp/secure/round/breadcrumbs/edit/nostats/end.jsp"/>
+	</definition>
+
+	<!-- view round screen - search (secure) -->
+	<definition name=".view.viewround-search" extends=".secureMainLayout">
+		<put name="title" value="title.viewround.search"/>
+		<put name="body-content" value="/jsp/secure/round/viewround-search.jsp"/>
+	</definition>
+
+	<!-- view round screen - search results (secure) -->
+	<definition name=".view.viewround-search-results" extends=".secureMainLayout">
+		<put name="title" value="title.viewround.searchresults"/>
+		<put name="body-content" value="/jsp/secure/round/viewround-search-results.jsp"/>
+	</definition>
+
+	<!-- view round screen - Page 1 (secure) -->
+	<definition name=".view.viewround-page1" extends=".secureMainLayout">
+		<put name="title" value="title.viewround"/>
+		<put name="body-content" value="/jsp/secure/round/viewround-page1.jsp"/>
+	</definition>
+
+	<!-- view round screen, no stats - Page 1 (secure) -->
+	<definition name=".view.nostats-viewround-page1" extends=".secureMainLayout">
+		<put name="title" value="title.viewround"/>
+		<put name="body-content" value="/jsp/secure/round/nostats-viewround-page1.jsp"/>
+	</definition>
+
+	<!-- caddie screen (secure) -->
+	<definition name=".view.caddie" extends=".secureMainLayout">
+		<put name="title" value="title.caddie"/>
+		<put name="body-content" value="/jsp/secure/caddie/caddie.jsp"/>
+	</definition>
+
+	<!-- your stats screen (secure) -->
+	<definition name=".view.yourstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats"/>
+		<put name="body-content" value="/jsp/secure/stats/yourstats.jsp"/>
+	</definition>
+
+	<!-- GIR stats screen (secure) -->
+	<definition name=".view.girstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.gir"/>
+		<put name="form-action" value="/secure/GIR-stats-refresh"/>
+		<put name="pf-action" value="PF-GIR-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/stat-chart.jsp"/>
+	</definition>
+	<definition name=".view.pf-girstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.gir"/>
+		<put name="form-action" value="/secure/PF-GIR-stats-refresh"/>
+		<put name="goback-action" value="GIR-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/pf-stat-chart.jsp"/>
+	</definition>
+
+	<!-- tee-shot stats screen (secure) -->
+	<definition name=".view.teeshotstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.teeshot"/>
+		<put name="form-action" value="/secure/Teeshot-stats-refresh"/>
+		<put name="pf-action" value="PF-Teeshot-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/stat-chart.jsp"/>
+	</definition>
+	<definition name=".view.pf-teeshotstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.teeshot"/>
+		<put name="form-action" value="/secure/PF-Teeshot-stats-refresh"/>
+		<put name="goback-action" value="Teeshot-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/pf-stat-chart.jsp"/>
+	</definition>
+
+	<!-- summary stats screen (secure) -->
+	<definition name=".view.summarystats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.summary"/>
+		<put name="pf-action" value="PF-Summary-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/summary-stats.jsp"/>
+	</definition>
+	<definition name=".view.pf-summarystats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.summary"/>
+		<put name="goback-action" value="Summary-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/pf-summary-stats.jsp"/>
+	</definition>
+
+	<!-- putting stats screen (secure) -->
+	<definition name=".view.puttingstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.putting"/>
+		<put name="form-action" value="/secure/Putting-stats-refresh"/>
+		<put name="pf-action" value="PF-Putting-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/stat-chart.jsp"/>
+	</definition>
+	<definition name=".view.pf-puttingstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.putting"/>
+		<put name="form-action" value="/secure/PF-Putting-stats-refresh"/>
+		<put name="goback-action" value="Putting-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/pf-stat-chart.jsp"/>
+	</definition>
+
+	<!-- scoring stats screen (secure) -->
+	<definition name=".view.scoringstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.scoring"/>
+		<put name="form-action" value="/secure/Scoring-stats-refresh"/>
+		<put name="pf-action" value="PF-Scoring-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/stat-chart.jsp"/>
+	</definition>
+	<definition name=".view.pf-scoringstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.scoring"/>
+		<put name="form-action" value="/secure/PF-Scoring-stats-refresh"/>
+		<put name="goback-action" value="Scoring-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/pf-stat-chart.jsp"/>
+	</definition>
+
+	<!-- approach-shot stats screen (secure) -->
+	<definition name=".view.approachshotstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.approachshot"/>
+		<put name="form-action" value="/secure/Approachshot-stats-refresh"/>
+		<put name="pf-action" value="PF-Approachshot-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/stat-chart.jsp"/>
+	</definition>
+	<definition name=".view.pf-approachshotstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.approachshot"/>
+		<put name="form-action" value="/secure/PF-Approachshot-stats-refresh"/>
+		<put name="goback-action" value="Approachshot-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/pf-stat-chart.jsp"/>
+	</definition>
+
+	<!-- approach-shot stats screen (secure) -->
+	<definition name=".view.aroundgreenstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.aroundgreen"/>
+		<put name="form-action" value="/secure/AroundGreen-stats-refresh"/>
+		<put name="pf-action" value="PF-AroundGreen-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/stat-chart.jsp"/>
+	</definition>
+	<definition name=".view.pf-aroundgreenstats" extends=".secureMainLayout">
+		<put name="title" value="title.yourstats.aroundgreen"/>
+		<put name="form-action" value="/secure/PF-AroundGreen-stats-refresh"/>
+		<put name="goback-action" value="AroundGreen-stats-refresh.do"/>
+		<put name="body-content" value="/jsp/secure/stats/pf-stat-chart.jsp"/>
+	</definition>
+
+	<!-- END ROUND DEFINITIONS ================================================ -->
+
+	<!-- logout screen -->
+	<definition name=".view.logout" extends=".mainLayout">
+		<put name="title" value="title.logout"/>
+		<put name="body-content" value="/jsp/logout.jsp"/>
+	</definition>
+
+</tiles-definitions>

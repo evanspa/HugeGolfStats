@@ -1,0 +1,12 @@
+insert into calendar_month (id, locale_id, month_number, name) values (0, 0, 1, 'January');
+insert into calendar_month (id, locale_id, month_number, name) values (1, 0, 2, 'February');
+insert into calendar_month (id, locale_id, month_number, name) values (2, 0, 3, 'March');
+insert into calendar_month (id, locale_id, month_number, name) values (3, 0, 4, 'April');
+insert into calendar_month (id, locale_id, month_number, name) values (4, 0, 5, 'May');
+insert into calendar_month (id, locale_id, month_number, name) values (5, 0, 6, 'June');
+insert into calendar_month (id, locale_id, month_number, name) values (6, 0, 7, 'July');
+insert into calendar_month (id, locale_id, month_number, name) values (7, 0, 8, 'August');
+insert into calendar_month (id, locale_id, month_number, name) values (8, 0, 9, 'September');
+insert into calendar_month (id, locale_id, month_number, name) values (9, 0, 10, 'October');
+insert into calendar_month (id, locale_id, month_number, name) values (10, 0, 11, 'November');
+insert into calendar_month (id, locale_id, month_number, name) values (11, 0, 12, 'December');

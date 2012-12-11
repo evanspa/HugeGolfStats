@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+		
+	<!-- CHART CATEGORIES -->
+	<bean id="scoringChartCategory" class="name.paulevans.golf.bean.chart.ChartCategory" singleton="true">
+		<property name="titleKey" value="yourstats.scoring.heading" />
+		<property name="chartGroups">
+			<list>
+				<ref bean="ScoresTrendGroup" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 9-hole/18-hole Scores chart group -->
+	<bean id="ScoresTrendGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="NineHoleScoresTrendChart" />
+				<ref bean="EighteenHoleScoresTrendChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- SCORING CHARTS -->
+	<bean id="NineHoleScoresTrendChart" class="name.paulevans.golf.bean.chart.scoring.NineHoleScoresTrend" singleton="true">
+		<property name="titleKey" value="yourstats.scoring.charts.9holescore.trend" />
+	</bean>
+	<bean id="EighteenHoleScoresTrendChart" class="name.paulevans.golf.bean.chart.scoring.EighteenHoleScoresTrend" singleton="true">
+		<property name="titleKey" value="yourstats.scoring.charts.18holescore.trend" />
+	</bean>	
+</beans>

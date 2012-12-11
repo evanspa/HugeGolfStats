@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	
+	<!-- Encryption Utils object -->
+	<bean 
+		id="encryptionUtils" 
+		class="name.paulevans.golf.util.impl.EncryptionUtilsImpl"
+		singleton="true">
+		<property name="encryptionAlgorithm" value="MD5" />
+	</bean>
+	
+	<!-- Date format display object -->
+	<bean id="dateFormatDisplay" class="java.text.SimpleDateFormat" singleton="true">
+		<constructor-arg type="java.lang.String"><value>EEEE, MMMMM dd, yyyy</value></constructor-arg>
+	</bean>
+	
+	<!-- Datetime format display object -->
+	<bean id="datetimeFormatDisplay" class="java.text.SimpleDateFormat" singleton="true">
+		<constructor-arg type="java.lang.String"><value>EEEE, MMM dd, yyyy HH:mm:ss z</value></constructor-arg>
+	</bean>
+	
+	<!-- Date format input object -->
+	<bean id="dateFormatInput" class="java.text.SimpleDateFormat" singleton="true">
+		<constructor-arg type="java.lang.String"><value>MM/dd/yyyy</value></constructor-arg>
+	</bean>		
+				
+	<!-- Utility object -->
+	<bean 
+		id="utilityObject" 
+		class="name.paulevans.golf.util.NewUtil"
+		singleton="true">
+		<property name="dateFormatDisplay" ref="dateFormatDisplay" />
+		<property name="datetimeFormatDisplay" ref="datetimeFormatDisplay" />
+		<property name="dateFormatInput" ref="dateFormatInput" />
+		
+		<!-- This parameter is not really used any more.  As of this writing, 
+			 when adding/editing a course, a course is defined as containing 
+			 18 holes; no more, no less. -->
+		<property name="numCourseHolesList">
+			<list><value>18</value></list>
+		</property>
+		
+		<!-- The set of available par values for any particular hole. -->
+		<property name="parValuesList">
+			<list>
+				<value>3</value>
+				<value>4</value>
+				<value>5</value>
+				<value>6</value>
+			</list>
+		</property>
+		
+		<!-- The set of available putt values for any particular hole. -->
+		<property name="puttValuesList">
+			<list>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+				<value>4</value>
+				<value>5</value>
+				<value>6</value>
+			</list>
+		</property>
+	
+		<!-- The set of available values when choosing the front-9 starting hole number -->
+		<property name="front9StartingHolesList">
+			<list>
+				<value>1</value>
+				<value>10</value>
+				<value>19</value>
+			</list>
+		</property>
+		
+		<!-- The set of available values when choosing the back-9 starting hole number -->
+		<property name="back9StartingHolesList">
+			<list>
+				<value>10</value>
+				<value>19</value>
+				<value>28</value>
+			</list>
+		</property>
+	
+		<!-- The set of available score values for any particular hole. -->
+		<property name="scoreValuesList">
+			<list>
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+				<value>4</value>
+				<value>5</value>
+				<value>6</value>
+				<value>7</value>
+				<value>8</value>
+				<value>9</value>
+				<value>10</value>
+				<value>11</value>
+				<value>12</value>
+				<value>13</value>
+				<value>14</value>
+				<value>15</value>
+			</list>
+		</property>
+		
+		<!-- The default country ID to use when adding a course if the
+			 player's home-course is not set. -->
+		<property name="countryId" value="0" /> <!-- United States -->
+		
+		<!-- The default state-province ID to use when adding a course if the
+			 player's home-course is not set. -->
+		<property name="stateProvinceId" value="32" /> <!-- New York -->
+	
+		<!-- The default number of holes a couse has - used for defaulting
+			 the drop-down on the add-course form.  This parameter is not really 
+			 used any more.  As of this writing, when adding/editing a course, 
+			 a course is defined as containing 18 holes; no more, no less. -->
+		<property name="defaultNumCourseHoles" value="18" />	
+	
+		<!-- The default putt value when entering the score for a hole -->
+		<property name="defaultPuttValue" value="2" />
+	
+		<!-- The default par value when adding a new course -->
+		<property name="defaultParValue" value="4" />
+		
+		<!-- The email address of the administrator of the application -->
+		<property name="adminEmail" value="admin@HugeGolfStats.com" />
+		
+		<!-- The email address of the suggestions-inbox -->
+		<property name="suggestionsEmail" value="suggestions@HugeGolfStats.com" />
+
+		<property name="linkToMenuMappings">
+			<map>
+				<entry>
+					<key><value>/Welcome.do</value></key>
+					<value>secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/TermsOfUse.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/secure/TermsOfUse.do</value></key>
+					<value>secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/PrivacyNotice.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PrivacyNotice.do</value></key>
+					<value>secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/CreateAccount-submit.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/CreateAccount-submit-display.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/Logout.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/ForgotUserId.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/ForgotUserId-submit.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/ForgotPassword.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/ForgotPassword-submit.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/CancelCreateAccount.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/secure/RecentRounds-resort.do</value></key>
+					<value>secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/Refresh-CreateAccount.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/ContactUs.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/ContactUs-submit.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ContactUs.do</value></key>
+					<value>secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ContactUs-submit.do</value></key>
+					<value>secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-PostRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PostRound-page1-submit.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PostRound-page2-submit.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PostRound-page3-submit.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry >
+					<key><value>/secure/nostats-PostRound-complete-display.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PostRound-complete-display.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Previous-PostRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditRound-search.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditRound-search-results.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditRound-search-results-sort.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditRound-page1-submit.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Previous-EditRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditRound-page2-submit.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditRound-page3-submit.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditRound-complete-display.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/CancelRound.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Previous-EditRound-search-results.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ViewRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-ViewRound-search.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-AddCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditCourse-search.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-search-results.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-search-results-sort.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-page1-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditCourse-page1-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Previous-EditCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/CancelCourse.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-page2-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditCourse-page2-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-page3-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-complete-display.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/nostats-EditRound-complete-display.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/AddCourse-page1-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-AddCourse-page1-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Previous-AddCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Previous-AddCourse-page2.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/AddCourse-page2-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-AddCourse-page2-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/AddCourse-page3-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/AddCourse-complete-display.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-ViewCourse-search.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ViewCourse-search-results.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ViewCourse-search-results-sort.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ViewCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ViewRound-search-results.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ViewRound-search-results-sort.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditHomeCourse.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/CancelEditProfile.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditPersonalInfo-submit.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditAccountInfo-submit.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditHomeCourse-submit.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditPlayingHabits-submit.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditScorecard-submit.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Summary-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PF-Summary-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Putting-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PF-Putting-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Teeshot-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PF-Teeshot-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/GIR-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PF-GIR-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Approachshot-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PF-Approachshot-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/AroundGreen-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PF-AroundGreen-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/CancelTeam.do</value></key>
+					<value>teams</value>
+				</entry>
+				<entry>
+					<key><value>/secure/CreateTeam-page1-submit.do</value></key>
+					<value>teams</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-CreateTeam-page1.do</value></key>
+					<value>teams</value>
+				</entry>
+				<entry>
+					<key><value>/secure/admin/ViewPlayer-search-results.do</value></key>
+					<value>admin</value>
+				</entry>
+				<entry>
+					<key><value>/secure/admin/ViewPlayer-search-results-sort.do</value></key>
+					<value>admin</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

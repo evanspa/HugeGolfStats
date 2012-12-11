@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+
+<menubar>
+	<menu name="secure_home" action="secure/Welcome.do" message-key="menu.loggedin.menu.home" selected="true">
+		<menuitem action="secure/MemberHome.do" message-key="menu.loggedin.menuitem.lifetimestatisticssummary" selected="true"/>
+		<menuitem action="secure/RecentRounds.do" message-key="menu.loggedin.menuitem.recentrounds" />
+		<menuitem action="secure/HandicapSummary.do" message-key="menu.loggedin.menuitem.handicapsummary" />
+		<menuitem action="secure/FAQ.do" message-key="menu.loggedin.menuitem.faq" />
+		<menuitem action="scorecard-pdf/hugegolfstats-scorecard.pdf" message-key="menu.notloggedin.menuitem.scorecard" />
+	</menu>
+	<menu name="rounds" action="secure/Rounds.do" message-key="menu.loggedin.menu.rounds">
+		<menuitem action="secure/PostRound-page1.do" message-key="menu.loggedin.menuitem.addround" />
+		<menuitem action="secure/EditRound-search.do" message-key="menu.loggedin.menuitem.editround" />
+		<menuitem action="secure/ViewRound-search.do" message-key="menu.loggedin.menuitem.searchrounds" />
+		<menuitem action="secure/RecentRounds2.do" message-key="menu.loggedin.menuitem.recentrounds" />
+		<menuitem action="secure/HandicapSummary2.do" message-key="menu.loggedin.menuitem.handicapsummary" />
+		<menuitem action="scorecard-pdf/hugegolfstats-scorecard.pdf" message-key="menu.notloggedin.menuitem.scorecard" />
+	</menu>
+	<menu name="yourstats" action="secure/YourStats.do" message-key="menu.loggedin.menu.yourstats">
+		<menuitem action="secure/Summary-stats.do" message-key="menu.loggedin.menuitem.statisticssummary" />
+		<menuitem action="secure/Scoring-stats.do?chartcategory=scoringChartCategory" message-key="menu.loggedin.menuitem.scoringstats" />
+		<menuitem action="secure/Putting-stats.do?chartcategory=puttingChartCategory" message-key="menu.loggedin.menuitem.puttingstats" />
+		<menuitem action="secure/Teeshot-stats.do?chartcategory=teeshotChartCategory" message-key="menu.loggedin.menuitem.teeshotstats" />
+		<menuitem action="secure/GIR-stats.do?chartcategory=girChartCategory" message-key="menu.loggedin.menuitem.girstats" />
+		<menuitem action="secure/Approachshot-stats.do?chartcategory=approachshotChartCategory" message-key="menu.loggedin.menuitem.approachshotstats" />
+		<menuitem action="secure/AroundGreen-stats.do?chartcategory=aroundgreenChartCategory" message-key="menu.loggedin.menuitem.aroundgreenstats" />
+	</menu>
+	<menu name="caddie" action="secure/Caddie.do" message-key="menu.loggedin.menu.caddie" role="admin">
+		<menuitem action="secure/CourseReport.do" message-key="menu.loggedin.menuitem.coursereport" />
+	</menu>
+	<menu name="profile" action="secure/Profile.do" message-key="menu.loggedin.menu.yourprofile">
+		<menuitem action="secure/Profile.do" message-key="menu.loggedin.menuitem.yourprofile.view" />
+		<menuitem action="secure/EditPersonalInfo.do" message-key="menu.loggedin.menuitem.edityourprofile.personalinfo" />
+		<menuitem secure="true" action="secure/EditAccountInfo.do" message-key="menu.loggedin.menuitem.edityourprofile.accountinfo" />
+		<menuitem action="secure/EditHomeCourse.do" message-key="menu.loggedin.menuitem.edityourprofile.homecourseinfo" />
+		<menuitem action="secure/EditPlayingHabits.do" message-key="menu.loggedin.menuitem.edityourprofile.playinghabitsinfo" />
+		<menuitem action="secure/EditScorecard.do" message-key="menu.loggedin.menuitem.edityourprofile.scorecard" />
+	</menu>
+	<menu name="courses" action="secure/Courses.do" message-key="menu.loggedin.menu.courses">
+		<menuitem action="secure/AddCourse-page1.do" message-key="menu.loggedin.menuitem.addcourse" />
+		<menuitem action="secure/EditCourse-search.do" message-key="menu.loggedin.menuitem.editcourse" />
+		<menuitem action="secure/ViewCourse-search.do" message-key="menu.loggedin.menuitem.searchcourses" />
+	</menu>
+	<menu name="teams" action="secure/Teams.do" message-key="menu.loggedin.menu.team" role="admin">
+		<menuitem action="secure/JoinTeam-page1.do" message-key="menu.loggedin.menuitem.jointeam" />
+		<menuitem action="secure/CreateTeam-page1.do" message-key="menu.loggedin.menuitem.createteam" />
+		<menuitem action="secure/ManageTeam-search.do" message-key="menu.loggedin.menuitem.manageteam" />
+	</menu>
+	<menu name="admin" action="secure/admin/Admin.do" message-key="menu.loggedin.menu.admin" role="admin">
+		<menuitem action="secure/admin/UsageSummary.do" message-key="menu.loggedin.menuitem.usagesummary" />
+		<menuitem action="secure/admin/ViewPlayer-search.do" message-key="menu.loggedin.menuitem.searchplayers" />
+		<menuitem action="secure/admin/SendBroadcastEmail.do" message-key="menu.loggedin.menuitem.sendbroadcastemail" />
+		<menuitem action="secure/admin/ViewSystemInfo.do" message-key="menu.loggedin.menuitem.systeminfo" />
+	</menu>
+</menubar>

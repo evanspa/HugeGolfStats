@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+		
+	<!-- CHART CATEGORIES -->
+	<bean id="aroundgreenChartCategory" class="name.paulevans.golf.bean.chart.ChartCategory" singleton="true">
+		<property name="titleKey" value="yourstats.aroundgreen.heading" />
+		<property name="chartGroups">
+			<list>
+				<ref bean="UpAndDownGroup" />
+				<ref bean="SandSaveGroup" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Around-the-green (up-and-down) chart group -->
+	<bean id="UpAndDownGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="UpDownConversionPercentageTrendChart" />
+				<ref bean="UpDownConversionCountsBarChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Around-the-green (sand-save) chart group -->
+	<bean id="SandSaveGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="SandSaveConversionPercentageTrendChart" />
+				<ref bean="SandSaveConversionCountsBarChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Approach shot CHARTS -->
+	<bean id="UpDownConversionPercentageTrendChart" class="name.paulevans.golf.bean.chart.aroundgreen.UpDownConversionPercentageTrend" singleton="true">
+		<property name="titleKey" value="yourstats.aroundgreen.charts.updownconversion.trend" />
+	</bean>
+	<bean id="UpDownConversionCountsBarChart" class="name.paulevans.golf.bean.chart.aroundgreen.UpDownConversionCountsBar" singleton="true">
+		<property name="titleKey" value="yourstats.aroundgreen.charts.updownattemptconvert.counts" />
+	</bean>
+	<bean id="SandSaveConversionPercentageTrendChart" class="name.paulevans.golf.bean.chart.aroundgreen.SandSaveConversionPercentageTrend" singleton="true">
+		<property name="titleKey" value="yourstats.aroundgreen.charts.sandsaveconversion.trend" />
+	</bean>
+	<bean id="SandSaveConversionCountsBarChart" class="name.paulevans.golf.bean.chart.aroundgreen.SandSaveConversionCountsBar" singleton="true">
+		<property name="titleKey" value="yourstats.aroundgreen.charts.sandsaveattemptconvert.counts" />
+	</bean>
+</beans>

@@ -1,0 +1,1270 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+
+	<!-- ======= Form Bean Definitions -->
+    <form-beans>
+        
+        <form-bean
+    		name="MemberHomeForm"
+    		type="name.paulevans.golf.web.struts.formbean.MemberHomeForm" />    
+    
+    	<form-bean
+    		name="ProfileForm"
+    		type="name.paulevans.golf.web.struts.formbean.ProfileForm" />    
+    				
+    	<form-bean
+    		name="CourseForm"
+    		type="name.paulevans.golf.web.struts.formbean.CourseForm" />
+    		
+    	<form-bean
+    		name="RoundForm"
+    		type="name.paulevans.golf.web.struts.formbean.RoundForm" />
+    		
+    	<form-bean
+    		name="ForgotUserIdForm"
+    		type="name.paulevans.golf.web.struts.formbean.ForgotUserIdForm" />
+    		
+    	<form-bean
+    		name="ForgotPasswordForm"
+    		type="name.paulevans.golf.web.struts.formbean.ForgotPasswordForm" />
+    		
+    	<form-bean
+    		name="StatisticsForm"
+    		type="name.paulevans.golf.web.struts.formbean.StatisticsForm" />    
+    		
+    	<form-bean
+    		name="TeamForm"
+    		type="name.paulevans.golf.web.struts.formbean.TeamForm" />	
+    		
+    	<form-bean
+    		name="ContactUsForm"
+    		type="name.paulevans.golf.web.struts.formbean.ContactUsForm" />
+    		
+    	<form-bean
+    		name="MsgBroadcastForm"
+    		type="name.paulevans.golf.web.struts.formbean.MessageBroadcastForm" />
+    </form-beans>
+    
+    <!-- ======= Global Exception Handler -->
+    <global-exceptions>
+    	<exception 
+      		 key="exception.message" 
+      		type="java.lang.Exception" 
+      	 handler="name.paulevans.golf.web.ExceptionHandler" />
+	</global-exceptions>
+  
+ 	<!-- ======= Global Forward Definitions -->
+    <global-forwards>
+        <forward name="welcome" path="/Welcome.do" />
+        <forward name="login" path=".view.login" />
+        <forward name="exceptioncaught" path=".view.exceptioncaught" />
+    </global-forwards>
+
+	<!-- ======= Action Mapping Definitions -->
+    <action-mappings>
+    
+        <!-- Default "Welcome" action; forwards to welcome.jsp -->
+        <action 
+        	path="/Welcome" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.welcome" />
+        </action>
+        
+        <!-- Terms of Use screen -->
+        <action 
+        	path="/TermsOfUse" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.termsofuse" />
+        </action>
+        
+         <!-- Terms of Use screen (secure) -->
+        <action 
+        	path="/secure/TermsOfUse" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.termsofuse" />
+        </action>
+        
+        <!-- Privacy Notice screen -->
+        <action 
+        	path="/PrivacyNotice" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.privacynotice" />
+        </action>
+        
+         <!-- Privacy Notice screen (secure) -->
+        <action 
+        	path="/secure/PrivacyNotice" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.privacynotice" />
+        </action>
+        
+        <!-- "Take Tour" action -->
+        <action 
+        	path="/TakeTour" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.taketour" />
+        </action>
+        
+        <!-- View screenshot action -->
+        <action 
+        	path="/ViewScreenshot" 
+        	type="name.paulevans.golf.web.struts.action.PrepareViewScreenshotAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.viewscreenshot" />
+        </action>
+        
+        <!-- "FAQs" action -->
+        <action 
+        	path="/FAQ" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.faq" />
+        </action>
+        <action 
+        	path="/secure/FAQ" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.faq" />
+        </action>
+        
+        <!-- "Acknowledgements" action -->
+        <action 
+        	path="/Acknowledgements" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.acknowledgements" />
+        </action>
+        <action 
+        	path="/secure/Acknowledgements" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.acknowledgements" />
+        </action>
+        
+        <!-- "Contact Us" action -->
+        <action 
+        	path="/ContactUs" 
+        	type="name.paulevans.golf.web.struts.action.PrepareContactUsAction" 
+        	name="ContactUsForm"
+        	validate="false">
+        	<forward name="success" path=".view.contactus" />
+        </action>
+        <action 
+        	path="/ContactUs-submit" 
+        	type="name.paulevans.golf.web.struts.action.ContactUsAction" 
+        	name="ContactUsForm"
+        	validate="false">
+        	<forward name="success" path=".view.contactus-submitted" />
+        </action>
+		
+		<!-- "Contact Us" action if already logged-in -->
+		<action 
+        	path="/secure/ContactUs" 
+        	type="name.paulevans.golf.web.struts.action.PrepareContactUsAction" 
+        	name="ContactUsForm"
+        	validate="false">
+        	<forward name="success" path=".view.secure-contactus" />
+        </action>
+        <action 
+        	path="/secure/ContactUs-submit" 
+        	type="name.paulevans.golf.web.struts.action.ContactUsAction" 
+        	name="ContactUsForm"
+        	validate="false">
+        	<forward name="success" path=".view.secure-contactus-submitted" />
+        </action>
+        
+        <!-- Welcome page if already logged-in -->
+        <action 
+        	path="/secure/Welcome" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.welcome-secure" />
+        </action>
+        
+        <!-- Admin home screen -->
+        <action
+        	path="/secure/admin/Admin"
+        	name="BaseForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.admin" />
+        </action>
+        
+        <!-- Screen for admin user to send message broadcast -->
+        <action
+        	path="/secure/admin/SendBroadcastEmail"
+        	name="MsgBroadcastForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.admin.messagebroadcast" />
+        </action>
+      
+        <!-- Admin screen after broadcast message is sent -->
+        <action
+        	path="/secure/admin/SendBroadcastEmail-submit"
+        	name="MsgBroadcastForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.admin.SendMessageBroadcastAction">
+       		<forward name="success" path=".view.admin.messagebroadcast-sent" />
+        </action>
+        
+        <!-- Generic 'cancel' admin action -->
+        <action
+        	path="/secure/admin/CancelAdmin"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.admin.CancelAdminAction">
+       		<forward name="success" path=".view.admin" />
+        </action>
+        
+        <!-- Admin usage summary screen -->
+        <action
+        	path="/secure/admin/UsageSummary"
+        	name="BaseForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.admin.PrepareUsageSummaryAction">
+       		<forward name="success" path=".view.admin.usagesummary" />
+        </action>
+        
+        <!-- Admin search players screen -->
+        <action
+        	path="/secure/admin/ViewPlayer-search"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.admin.viewplayer-search" />
+        </action>
+        
+        <!-- Admin search-results players screen -->
+        <action
+        	path="/secure/admin/ViewPlayer-search-results"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.admin.SearchPlayersAction">
+       		<forward name="success" path=".view.admin.viewplayer-search-results" />
+        </action>
+        
+        <!-- Admin search-results players sort screen -->
+        <action
+        	path="/secure/admin/ViewPlayer-search-results-sort"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.admin.SortPlayerSearchResultsAction">
+       		<forward name="success" path=".view.admin.viewplayer-search-results" />
+        </action>
+      
+        <!-- View environment variables screen -->
+        <action
+        	path="/secure/admin/ViewSystemInfo"
+        	name="BaseForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.admin.viewsysteminfo" />
+        </action>
+
+		<!-- Caddie pages -->
+		<action 
+        	path="/secure/Caddie" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.caddie" />
+        </action>
+
+        
+        <!-- Statistics page -->
+        <action 
+        	path="/secure/ViewStatistics" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.view-statistics" />
+        </action>
+        
+        <!-- Your Stats page -->
+       	<action 
+        	path="/secure/YourStats" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="BaseForm"
+        	validate="false">
+        	<forward name="success" path=".view.yourstats" />
+        </action>
+        
+        <!-- GIR stats and refresh actions -->
+       	<action 
+        	path="/secure/GIR-stats" 
+        	type="name.paulevans.golf.web.struts.action.stats.PrepareGIRStatsAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.girstats" />
+        </action>
+       	<action 
+        	path="/secure/GIR-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.girstats" />
+        </action>
+       	<action 
+        	path="/secure/PF-GIR-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.stats.PreparePrintFriendlyAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.pf-girstats" />
+        </action>
+        
+        <!-- Off-the-tee stats and refresh actions -->
+       	<action 
+        	path="/secure/Teeshot-stats" 
+        	type="name.paulevans.golf.web.struts.action.stats.PrepareTeeShotStatsAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.teeshotstats" />
+        </action>
+       	<action 
+        	path="/secure/Teeshot-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.teeshotstats" />
+        </action>
+       	<action 
+        	path="/secure/PF-Teeshot-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.stats.PreparePrintFriendlyAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.pf-teeshotstats" />
+        </action>
+        
+        <!-- Summary stats and refresh actions -->
+       	<action 
+        	path="/secure/Summary-stats" 
+        	type="name.paulevans.golf.web.struts.action.stats.PrepareSummaryStatsAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.summarystats" />
+        </action>
+       	<action 
+        	path="/secure/Summary-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.stats.PrepareSummaryStatsAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.summarystats" />
+        </action>
+		<action
+        	path="/secure/PF-Summary-stats-refresh"
+        	type="name.paulevans.golf.web.struts.action.stats.PreparePFSummaryStatsAction"
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.pf-summarystats" />
+        </action>
+
+		<!-- Putting stats and refresh actions -->
+       	<action 
+        	path="/secure/Putting-stats" 
+        	type="name.paulevans.golf.web.struts.action.stats.PreparePuttingStatsAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.puttingstats" />
+        </action>
+       	<action 
+        	path="/secure/Putting-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.puttingstats" />
+        </action>
+       	<action 
+        	path="/secure/PF-Putting-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.stats.PreparePrintFriendlyAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.pf-puttingstats" />
+        </action>
+        
+        <!-- Scoring stats and refresh actions -->
+       	<action 
+        	path="/secure/Scoring-stats" 
+        	type="name.paulevans.golf.web.struts.action.stats.PrepareScoringStatsAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.scoringstats" />
+        </action>
+       	<action 
+        	path="/secure/Scoring-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.scoringstats" />
+        </action>
+       	<action 
+        	path="/secure/PF-Scoring-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.stats.PreparePrintFriendlyAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.pf-scoringstats" />
+        </action>
+        
+        <!-- Approach Shot stats and refresh actions -->
+       	<action 
+        	path="/secure/Approachshot-stats" 
+        	type="name.paulevans.golf.web.struts.action.stats.PrepareApproachShotStatsAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.approachshotstats" />
+        </action>
+       	<action 
+        	path="/secure/Approachshot-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.approachshotstats" />
+        </action>
+       	<action 
+        	path="/secure/PF-Approachshot-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.stats.PreparePrintFriendlyAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.pf-approachshotstats" />
+        </action>
+        
+        <!-- Around-the-green stats and refresh actions -->
+       	<action 
+        	path="/secure/AroundGreen-stats" 
+        	type="name.paulevans.golf.web.struts.action.stats.PrepareAroundGreenStatsAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.aroundgreenstats" />
+        </action>
+       	<action 
+        	path="/secure/AroundGreen-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.AdapterAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.aroundgreenstats" />
+        </action>
+       	<action 
+        	path="/secure/PF-AroundGreen-stats-refresh" 
+        	type="name.paulevans.golf.web.struts.action.stats.PreparePrintFriendlyAction" 
+        	name="StatisticsForm"
+        	validate="false">
+        	<forward name="success" path=".view.pf-aroundgreenstats" />
+        </action>
+
+        <!-- Login-related definitions -->
+        <action 
+        	path="/Login" forward=".view.login" />
+        	
+        <action
+        	path="/LoginFailed" forward=".view.loginfailed" />
+        	
+        <action 
+        	path="/ForgotUserId" 
+        	type="name.paulevans.golf.web.struts.action.account.PrepareForgotUserIdAction" 
+        	name="ForgotUserIdForm"
+        	validate="false">
+        	<forward name="success" path=".view.forgotuserid" />
+        </action> 
+        
+        <action 
+        	path="/ForgotUserId-submit" 
+        	type="name.paulevans.golf.web.struts.action.account.NotifyUserIdAction" 
+        	name="ForgotUserIdForm"
+        	input=".view.forgotuserid"
+        	validate="true">
+        	<forward name="success" path=".view.forgotuserid-validinputs" />
+        	<forward name="failure" path=".view.forgotuserid-invalidinputs" />
+        </action> 
+                       		
+        <action 
+        	path="/ForgotPassword" 
+        	type="name.paulevans.golf.web.struts.action.account.PrepareForgotPasswordAction" 
+        	name="ForgotPasswordForm"
+        	validate="false">
+        	<forward name="success" path=".view.forgotpassword" />
+        </action>
+        	
+        <action 
+        	path="/ForgotPassword-submit" 
+        	type="name.paulevans.golf.web.struts.action.account.CreateAndNotifyNewPassword" 
+        	name="ForgotPasswordForm"
+        	input=".view.forgotpassword"
+        	validate="true">
+        	<forward name="success" path=".view.forgotpassword-validinputs" />
+        	<forward name="failure" path=".view.forgotpassword-invalidinputs" />
+        </action> 
+        
+        <!-- START ======= TEAM DEFINITIONS   ======================= -->
+        <action
+        	path="/secure/Teams"
+        	name="BaseForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.teams" />
+        </action>       
+        <action
+        	path="/secure/CreateTeam-page1"
+        	name="TeamForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.team.PrepareCreateTeamAction">
+       		<forward name="success" path=".view.createteam-page1" />
+        </action> 
+        <action
+        	path="/secure/Refresh-CreateTeam-page1"
+        	name="TeamForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.team.RefreshCreateTeamAction">
+        	<forward name="success" path=".view.createteam-page1" />
+        </action>      
+        <action
+        	path="/secure/CreateTeam-page1-submit"
+        	name="TeamForm"
+        	validate="true"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.createteam-page2" />
+        </action>
+        <action
+        	path="/secure/CancelTeam"
+        	name="TeamForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.team.CancelTeamAction">
+       		<forward name="success" path=".view.teams" />
+        </action> 
+        
+        <!-- END   ======= TEAM DEFINITIONS   ======================= -->
+
+        <!-- START ======= COURSE DEFINITIONS ======================= -->
+        <action
+        	path="/secure/Courses"
+        	name="BaseForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.courses" />
+        </action>
+        <action
+        	path="/secure/CancelCourse"
+        	name="CourseForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.CancelCourseAction">
+       		<forward name="success" path=".view.courses" />
+        </action> 
+        <action
+  	      	path="/secure/AddCourse-page1"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.PrepareCreateCourseAction">
+       		<forward name="success" path=".view.addcourse-page1" />
+        </action>   
+        <action
+  	      	path="/secure/Refresh-AddCourse-page1"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.RefreshStateProvincesAction">
+       		<forward name="success" path=".view.addcourse-page1" />
+        </action> 
+        <action
+  	      	path="/secure/Previous-AddCourse-page1"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.addcourse-page1" />
+        </action> 
+        <action 
+        	path="/secure/AddCourse-dups-continue"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction"
+        	name="CourseForm"
+        	validate="false"
+        	input=".view.addcourse-page1">
+        	<forward name="success" path=".view.addcourse-page2" />
+        </action>           
+        <action 
+        	path="/secure/AddCourse-page1-submit"
+        	type="name.paulevans.golf.web.struts.action.course.DuplicateCheckAction"
+        	name="CourseForm"
+        	validate="true"
+        	input=".view.addcourse-page1">
+        	<forward name="success" path=".view.addcourse-page2" />
+        	<forward name="failure" path=".view.addcourse-potentialdupsfound" />
+        </action>
+        <action
+  	      	path="/secure/Refresh-AddCourse-page1-submit"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.RefreshStateProvincesAction">
+       		<forward name="success" path=".view.addcourse-page2" />
+        </action> 
+        <action 
+        	path="/secure/AddCourse-page2-submit"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction"
+        	name="CourseForm"
+        	validate="true"
+        	input=".view.addcourse-page2">
+        	<forward name="success" path=".view.addcourse-page3" />
+        </action>
+        <action
+  	      	path="/secure/Previous-AddCourse-page2"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.addcourse-page2" />
+        </action> 
+        <action
+  	      	path="/secure/Refresh-AddCourse-page2-submit"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.RefreshStateProvincesAction">
+       		<forward name="success" path=".view.addcourse-page3" />
+        </action>                
+        <action 
+        	path="/secure/AddCourse-page3-submit"
+        	type="name.paulevans.golf.web.struts.action.course.SaveCourseAction"
+        	name="CourseForm"
+        	validate="true"
+        	input=".view.addcourse-page3">
+        	<forward name="success" path=".view.addcourse-complete-redirect" />
+        </action>
+        <action
+  	      	path="/secure/AddCourse-complete-display"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.PrepareViewCourseAction">
+       		<forward name="success" path=".view.addcourse-complete-display" />
+        </action> 
+        <action
+  	      	path="/secure/EditCourse-page1"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.PrepareEditCourseAction">
+       		<forward name="success" path=".view.editcourse-page1" />
+        </action>
+        <action
+  	      	path="/secure/Refresh-EditCourse-page1"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.RefreshStateProvincesAction">
+       		<forward name="success" path=".view.editcourse-page1" />
+        </action>             
+        <action
+  	      	path="/secure/Previous-EditCourse-page1"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.editcourse-page1" />
+        </action>               
+        <action 
+        	path="/secure/EditCourse-page1-submit"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction"
+        	name="CourseForm"
+        	validate="true"
+        	input=".view.editcourse-page1">
+        	<forward name="success" path=".view.editcourse-page2" />
+        </action>
+        <action
+  	      	path="/secure/Refresh-EditCourse-page1-submit"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.RefreshStateProvincesAction">
+       		<forward name="success" path=".view.editcourse-page2" />
+        </action>         
+        <action 
+        	path="/secure/EditCourse-page2-submit"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction"
+        	name="CourseForm"
+        	validate="true"
+        	input=".view.editcourse-page2">
+        	<forward name="success" path=".view.editcourse-page3" />
+        </action>
+        <action
+  	      	path="/secure/Refresh-EditCourse-page2-submit"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.RefreshStateProvincesAction">
+       		<forward name="success" path=".view.editcourse-page3" />
+        </action>
+        <action 
+        	path="/secure/EditCourse-page3-submit"
+        	type="name.paulevans.golf.web.struts.action.course.SaveCourseAction"
+        	name="CourseForm"
+        	validate="true"
+        	input=".view.editcourse-page3">
+        	<forward name="success" path=".view.editcourse-complete-redirect" />
+        </action>
+        <action
+  	      	path="/secure/EditCourse-complete-display"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.PrepareViewCourseAction">
+       		<forward name="success" path=".view.editcourse-complete-display" />
+        </action> 
+        <action
+  	      	path="/secure/EditCourse-search"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.PrepareSearchCoursesAction">
+       		<forward name="success" path=".view.editcourse-search" />
+        </action>
+        <action
+  	      	path="/secure/Refresh-EditCourse-search"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.RefreshStateProvincesAction">
+       		<forward name="success" path=".view.editcourse-search" />
+        </action>         
+        <action
+  	      	path="/secure/EditCourse-search-results"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.SearchCoursesAction">
+       		<forward name="success" path=".view.editcourse-search-results" />
+        </action>  
+        <action
+  	      	path="/secure/Previous-EditCourse-search-results"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.editcourse-search-results" />
+        </action> 
+        <action
+  	      	path="/secure/EditCourse-search-results-sort"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.SortSearchResultsAction">
+       		<forward name="success" path=".view.editcourse-search-results" />
+        </action> 
+        <action
+  	      	path="/secure/ViewCourse-search"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.PrepareSearchCoursesAction">
+       		<forward name="success" path=".view.viewcourse-search" />
+        </action> 
+        <action
+  	      	path="/secure/Refresh-ViewCourse-search"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.RefreshStateProvincesAction">
+       		<forward name="success" path=".view.viewcourse-search" />
+        </action>         
+        <action
+  	      	path="/secure/ViewCourse-search-results"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.SearchCoursesAction">
+       		<forward name="success" path=".view.viewcourse-search-results" />
+        </action> 
+        <action
+  	      	path="/secure/ViewCourse-search-results-sort"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.SortSearchResultsAction">
+       		<forward name="success" path=".view.viewcourse-search-results" />
+        </action>                    
+        <action
+  	      	path="/secure/ViewCourse-page1"
+        	name="CourseForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.course.PrepareViewCourseAction">
+       		<forward name="success" path=".view.viewcourse-page1" />
+        </action>    
+        <!-- END ========= COURSE DEFINITIONS ======================= -->
+        
+        <!-- START ======= ROUND DEFINITIONS ======================= -->
+        <action
+        	path="/secure/Rounds"
+        	name="BaseForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.rounds" />
+        </action>
+        <action
+        	path="/secure/PostRound-page1"
+        	name="RoundForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.PreparePostRoundAction">
+       		<forward name="success" path=".view.postround-page1" />
+        </action>
+        <action
+        	path="/secure/Refresh-PostRound-page1"
+        	name="RoundForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.RefreshPostRoundAction">
+        	<forward name="success" path=".view.postround-page1" />
+        </action>
+        <action
+        	path="/secure/Previous-PostRound-page1"
+        	name="RoundForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.postround-page1" />
+        </action>
+        <action
+        	path="/secure/PostRound-page1-submit"
+        	name="RoundForm"
+        	validate="true"
+        	input=".view.postround-page1"
+        	type="name.paulevans.golf.web.struts.action.round.PostRoundPageOneSubmitAction">
+       		<forward name="collectstats" path=".view.postround-page2" />
+       		<forward name="notcollectstats" path=".view.nostats-postround-page2" />
+        </action>   
+        <action
+        	path="/secure/PostRound-page2-submit"
+        	name="RoundForm"
+        	validate="true"
+        	input=".view.postround-page2"
+        	type="name.paulevans.golf.web.struts.action.round.PostRoundPageTwoSubmitAction">
+       		<forward name="success" path=".view.postround-page3" />
+        </action> 
+        <action
+        	path="/secure/nostats-PostRound-page2-submit"
+        	name="RoundForm"
+        	validate="true"
+        	input=".view.nostats-postround-page2"
+        	type="name.paulevans.golf.web.struts.action.round.NoStatsSaveRoundAction">
+       		<forward name="success" path=".view.nostats-postround-complete-redirect" />
+        </action>          
+        <action
+        	path="/secure/PostRound-page3-submit"
+        	name="RoundForm"
+        	validate="true"
+        	input=".view.postround-page3"
+        	type="name.paulevans.golf.web.struts.action.round.SaveRoundAction">
+       		<forward name="success" path=".view.postround-complete-redirect" />
+        </action> 
+        <action
+  	      	path="/secure/PostRound-complete-display"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.PrepareViewRoundAction">
+       		<forward name="collectstats" path=".view.postround-complete-display" />
+        </action>
+        <action
+  	      	path="/secure/nostats-PostRound-complete-display"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.PrepareViewRoundAction">
+       		<forward name="notcollectstats" path=".view.nostats-postround-complete-display" />
+        </action>        
+        <action
+  	      	path="/secure/EditRound-search"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.PrepareSearchRoundsAction">
+       		<forward name="success" path=".view.editround-search" />
+        </action>                
+        <action
+  	      	path="/secure/Refresh-EditRound-search"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.RefreshStateProvincesAction">
+       		<forward name="success" path=".view.editround-search" />
+        </action>
+        <action
+  	      	path="/secure/EditRound-search-results"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.SearchRoundsAction">
+       		<forward name="success" path=".view.editround-search-results" />
+        </action>  
+        <action
+  	      	path="/secure/Previous-EditRound-search-results"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.editround-search-results" />
+        </action>  
+        <action
+  	      	path="/secure/EditRound-search-results-sort"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.SortSearchResultsAction">
+       		<forward name="success" path=".view.editround-search-results" />
+        </action> 
+        <action
+  	      	path="/secure/EditRound-page1"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.PrepareEditRoundAction">
+       		<forward name="success" path=".view.editround-page1" />
+        </action>
+        <action
+        	path="/secure/Refresh-EditRound-page1"
+        	name="RoundForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.RefreshPostRoundAction">
+        	<forward name="success" path=".view.editround-page1" />
+        </action>
+        <action
+  	      	path="/secure/Previous-EditRound-page1"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.editround-page1" />
+        </action>         
+        <action
+  	      	path="/secure/EditRound-page1-submit"
+        	name="RoundForm"
+    		validate="true"
+    		input=".view.editround-page1"
+        	type="name.paulevans.golf.web.struts.action.round.PostRoundPageOneSubmitAction">
+       		<forward name="collectstats" path=".view.editround-page2" />
+       		<forward name="notcollectstats" path=".view.nostats-editround-page2" />
+        </action>
+        <action
+        	path="/secure/EditRound-page2-submit"
+        	name="RoundForm"
+        	validate="true"
+        	input=".view.editround-page2"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.editround-page3" />
+        </action> 
+        <action
+        	path="/secure/nostats-EditRound-page2-submit"
+        	name="RoundForm"
+        	validate="true"
+        	input=".view.nostats-editround-page2"
+        	type="name.paulevans.golf.web.struts.action.round.NoStatsSaveRoundAction">
+       		<forward name="success" path=".view.nostats-editround-complete-redirect" />
+        </action>  
+        <action 
+        	path="/secure/EditRound-page3-submit"
+        	type="name.paulevans.golf.web.struts.action.round.SaveRoundAction"
+        	name="RoundForm"
+        	validate="true"
+        	input=".view.editround-page3">
+        	<forward name="success" path=".view.editround-complete-redirect" />
+        </action>
+        <action
+  	      	path="/secure/EditRound-complete-display"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.PrepareViewRoundAction">
+       		<forward name="collectstats" path=".view.editround-complete-display" />
+        </action>
+        <action
+  	      	path="/secure/nostats-EditRound-complete-display"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.PrepareViewRoundAction">
+       		<forward name="notcollectstats" path=".view.nostats-editround-complete-display" />
+        </action>
+        <action
+  	      	path="/secure/ViewRound-search"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.PrepareSearchRoundsAction">
+       		<forward name="success" path=".view.viewround-search" />
+        </action>       
+        <action
+  	      	path="/secure/Refresh-ViewRound-search"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.RefreshStateProvincesAction">
+       		<forward name="success" path=".view.viewround-search" />
+        </action>                 
+        <action
+  	      	path="/secure/ViewRound-search-results"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.SearchRoundsAction">
+       		<forward name="success" path=".view.viewround-search-results" />
+        </action> 
+        <action
+  	      	path="/secure/QuickRoundSearch-submit"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.QuickSearchRoundsAction">
+       		<forward name="success" path=".view.viewround-search-results" />
+        </action>
+        <action
+  	      	path="/secure/ViewRound-search-results-sort"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.SortSearchResultsAction">
+       		<forward name="success" path=".view.viewround-search-results" />
+        </action>           
+        <action
+  	      	path="/secure/ViewRound-page1"
+        	name="RoundForm"
+    		validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.PrepareViewRoundAction">
+       		<forward name="collectstats" path=".view.viewround-page1" />
+       		<forward name="notcollectstats" path=".view.nostats-viewround-page1" />
+        </action>
+        <action
+        	path="/secure/CancelRound"
+        	name="RoundForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.round.CancelRoundAction">
+       		<forward name="success" path=".view.rounds" />
+        </action>   
+        <!-- END ========= ROUND DEFINITIONS ======================= -->
+        
+        <!-- START ========= ACCOUNT DEFINITIONS ======================= -->
+        <action
+        	path="/secure/Profile"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.account.PrepareViewAccountAction">
+        	<forward name="success" path=".view.viewprofile" />
+        </action>
+        <action
+        	path="/secure/EditPersonalInfo"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.account.PrepareEditAccountAction">
+        	<forward name="success" path=".view.editpersonalinfo" />
+        </action>
+        <action
+        	path="/secure/EditScorecard"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.account.PrepareEditAccountAction">
+        	<forward name="success" path=".view.editscorecard" />
+        </action>
+        <action
+        	path="/secure/EditAccountInfo"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.account.PrepareEditAccountAction">
+        	<forward name="success" path=".view.editaccountinfo" />
+        </action>
+        <action
+        	path="/secure/EditHomeCourse"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.account.PrepareEditAccountAction">
+        	<forward name="success" path=".view.edithomecourse" />
+        </action>
+        <action
+        	path="/secure/EditPlayingHabits"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.account.PrepareEditAccountAction">
+        	<forward name="success" path=".view.editplayinghabits" />
+        </action>
+        <action
+        	path="/secure/Refresh-EditHomeCourse"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.account.RefreshEditAccountAction">
+        	<forward name="success" path=".view.edithomecourse" />
+        </action>
+        <action
+        	path="/secure/EditPersonalInfo-submit"
+        	name="ProfileForm"
+        	validate="true"
+        	input=".view.editpersonalinfo"
+        	type="name.paulevans.golf.web.struts.action.account.SaveAccountAction">
+       		<forward name="success" path=".view.profilesaved-redirect" />
+        </action>
+        <action
+        	path="/secure/EditAccountInfo-submit"
+        	name="ProfileForm"
+        	validate="true"
+        	input=".view.editaccountinfo"
+        	type="name.paulevans.golf.web.struts.action.account.SaveAccountAction">
+       		<forward name="success" path=".view.profilesaved-redirect" />
+        </action>
+        <action
+        	path="/secure/EditHomeCourse-submit"
+        	name="ProfileForm"
+        	validate="true"
+        	input=".view.edithomecourse"
+        	type="name.paulevans.golf.web.struts.action.account.SaveAccountAction">
+       		<forward name="success" path=".view.profilesaved-redirect" />
+        </action>
+        <action
+        	path="/secure/EditPlayingHabits-submit"
+        	name="ProfileForm"
+        	validate="true"
+        	input=".view.editplayinghabits"
+        	type="name.paulevans.golf.web.struts.action.account.SaveAccountAction">
+       		<forward name="success" path=".view.profilesaved-redirect" />
+        </action>
+        <action
+        	path="/secure/EditScorecard-submit"
+        	name="ProfileForm"
+        	validate="true"
+        	input=".view.editscorecard"
+        	type="name.paulevans.golf.web.struts.action.account.SaveAccountAction">
+       		<forward name="success" path=".view.profilesaved-redirect" />
+        </action>
+        <action 
+        	path="/secure/EditProfile-submit-display" 
+        	name="ProfileForm"
+        	validate="false"
+        	forward=".view.profilesaved-display" />
+        <action
+        	path="/secure/CancelEditProfile"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.account.PrepareViewAccountAction">
+       		<forward name="success" path=".view.viewprofile" />
+        </action>  
+        <action
+        	path="/CancelCreateAccount"
+        	name="ProfileForm"
+        	validate="false"
+        	type="name.paulevans.golf.web.struts.action.AdapterAction">
+       		<forward name="success" path=".view.welcome" />
+        </action> 
+        <action 
+        	path="/CreateAccount"
+        	type="name.paulevans.golf.web.struts.action.account.PrepareCreateAccountAction"
+        	name="ProfileForm"
+        	validate="false"
+        	input=".view.createaccount">
+        	<forward name="success" path=".view.createaccount" />
+        </action>
+        <action 
+        	path="/Refresh-CreateAccount"
+        	type="name.paulevans.golf.web.struts.action.account.RefreshEditAccountAction"
+        	name="ProfileForm"
+        	validate="false"
+        	input=".view.createaccount">
+        	<forward name="success" path=".view.createaccount" />
+        </action>  	
+        <action 
+        	path="/CreateAccount-submit"
+        	type="name.paulevans.golf.web.struts.action.account.SaveAccountAction"
+        	name="ProfileForm"
+        	validate="true"
+        	input=".view.createaccount">
+        	<forward name="success" path=".view.accountcreated-redirect" />
+        </action>
+        <action 
+        	path="/CreateAccount-submit-display" 
+        	name="ProfileForm"
+        	validate="false"
+        	forward=".view.accountcreated-display" />
+        <!-- END =========== ACCOUNT DEFINITIONS ======================= --> 
+        	
+        <action
+        	path="/secure/MemberHome" 
+        	name="MemberHomeForm"
+        	type="name.paulevans.golf.web.struts.action.MemberHomeAction">
+        	<forward name="success" path=".view.memberhome" />
+        </action>
+        <action
+        	path="/secure/MemberHome2" 
+        	type="name.paulevans.golf.web.struts.action.MemberHomeAction">
+        	<forward name="success" path=".view.memberhome" />
+        </action>
+        
+        <action
+        	path="/secure/HandicapSummary" 
+        	type="name.paulevans.golf.web.struts.action.HandicapSummaryAction">
+        	<forward name="success" path=".view.handicapsummary" />
+        </action>
+        <action
+        	path="/secure/HandicapSummary2" 
+        	type="name.paulevans.golf.web.struts.action.HandicapSummaryAction">
+        	<forward name="success" path=".view.handicapsummary" />
+        </action>
+
+        <action
+        	path="/secure/RecentRounds" 
+        	type="name.paulevans.golf.web.struts.action.RecentRoundsAction">
+        	<forward name="success" path=".view.recentrounds" />
+        </action>
+        <action
+        	path="/secure/RecentRounds-resort" 
+        	type="name.paulevans.golf.web.struts.action.RecentRoundsAction">
+        	<forward name="success" path=".view.recentrounds" />
+        </action>        
+        <action
+        	path="/secure/RecentRounds2" 
+        	type="name.paulevans.golf.web.struts.action.RecentRoundsAction">
+        	<forward name="success" path=".view.recentrounds" />
+        </action>
+        	
+        <action
+        	path="/Logout" 
+        	type="name.paulevans.golf.web.struts.action.LogoutAction">
+        	<forward name="success" path=".view.logout" />
+        </action>
+      
+	</action-mappings>
+
+	<!-- ======= Controller Configuration -->
+    <controller
+       processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+	<!-- ======= Message Resources Definitions -->
+    <message-resources parameter="GolfAppResources" />
+    
+    <!--======== Plug Ins Configuration -->
+
+  	<!--======== Tiles plugin -->
+  	<!--
+     This plugin initialize Tiles definition factory. This later can takes some
+	 parameters explained here after. The plugin first read parameters from
+	 web.xml, thenoverload them with parameters defined here. All parameters
+	 are optional.
+     The plugin should be declared in each struts-config file.
+       - definitions-config: (optional)
+            Specify configuration file names. There can be several comma
+		    separated file names (default: ?? )
+       - moduleAware: (optional - struts1.1)
+            Specify if the Tiles definition factory is module aware. If true
+            (default), there will be one factory for each Struts module.
+			If false, there will be one common factory for all module. In this
+            later case, it is still needed to declare one plugin per module.
+            The factory will be initialized with parameters found in the first
+            initialized plugin (generally the one associated with the default
+            module).
+			  true : One factory per module. (default)
+			  false : one single shared factory for all modules
+	   - definitions-parser-validate: (optional)
+	        Specify if xml parser should validate the Tiles configuration file.
+			  true : validate. DTD should be specified in file header (default)
+			  false : no validation
+
+	  Paths found in Tiles definitions are relative to the main context.
+  -->
+
+    <plug-in className="org.apache.struts.tiles.TilesPlugin">
+
+      <!-- Path to XML definition file -->
+      <set-property 
+      	property="definitions-config"
+		value="/WEB-INF/tiles-defs.xml" />
+		
+      <!-- Set Module-awareness to true -->
+      <set-property property="moduleAware" value="true" />
+    </plug-in>
+
+
+  <!-- =========== Validator plugin -->
+
+  <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property
+        property="pathnames"
+        value="/WEB-INF/validator-rules.xml,
+        	   /WEB-INF/validation.xml" />
+  </plug-in>
+
+</struts-config>

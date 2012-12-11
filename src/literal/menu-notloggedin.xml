@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<menubar>
+	<menu name="not_secure_home" action="Welcome.do" message-key="menu.notloggedin.menu.home" selected="true">
+		<menuitem secure="true" action="secure/MemberHome.do" message-key="menu.notloggedin.menuitem.login" selected="true" />
+		<menuitem secure="true" action="CreateAccount.do" message-key="menu.notloggedin.menuitem.createaccount" />
+		<menuitem action="scorecard-pdf/hugegolfstats-scorecard.pdf" message-key="menu.notloggedin.menuitem.scorecard" />
+	</menu>
+	<menu name="take_tour" action="TakeTour.do" message-key="menu.notloggedin.menu.taketour">
+		<menuitem action="TakeTour.do#statssummary" message-key="menu.notloggedin.menuitem.taketour.statssummary" />
+		<menuitem action="TakeTour.do#handicapsummary" message-key="menu.notloggedin.menuitem.taketour.handicapsummary" />
+		<menuitem action="TakeTour.do#recentrounds" message-key="menu.notloggedin.menuitem.taketour.recentrounds" />
+		<menuitem action="TakeTour.do#postingaround" message-key="menu.notloggedin.menuitem.taketour.postingaround" />
+		<menuitem action="TakeTour.do#statistics" message-key="menu.notloggedin.menuitem.taketour.statistics" />
+		<menuitem action="TakeTour.do#playerprofile" message-key="menu.notloggedin.menuitem.taketour.playerprofile" />
+	</menu>	
+	<menu name="faq" action="FAQ.do" message-key="menu.notloggedin.menu.faq">
+		<menuitem action="FAQ.do#cost" message-key="menu.notloggedin.menuitem.faq.cost" />
+		<menuitem action="FAQ.do#howdoesitwork" message-key="menu.notloggedin.menuitem.faq.howdoesitwork" />
+		<menuitem action="FAQ.do#whyuse" message-key="menu.notloggedin.menuitem.faq.whyuse" />
+		<menuitem action="FAQ.do#ghin" message-key="menu.notloggedin.menuitem.faq.ghin" />
+		<menuitem action="FAQ.do#officialhandicap" message-key="menu.notloggedin.menuitem.faq.officialhandicap" />
+	</menu>
+	<menu name="acknowledgements" action="Acknowledgements.do" message-key="menu.notloggedin.menu.acknowledgements">
+		<menuitem action="Acknowledgements.do" message-key="menu.notloggedin.menuitem.acknowledgements" />
+	</menu>	
+</menubar>

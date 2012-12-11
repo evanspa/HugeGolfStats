@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- Data source -->
+	<bean
+		id="golfDataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/golf_statistics_test?autoReconnect=true" />
+		<property name="username" value="golf_user" />
+		<property name="password" value="g01fu53r" />
+	</bean>
+	
+	<!-- Hibernate session factory -->
+	<bean
+		id="golfSessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="golfDataSource" />
+		<property name="mappingResources">
+			<list>
+				<value>gen/hibernate/name/paulevans/golf/Address.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/ApproachShotDistance.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/ApproachShotLine.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Country.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Course.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/EyeWear.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/GolfBall.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/GolfClub.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/GreenInRegulation.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/HeadWear.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Hole.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/PantWear.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Player.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Score.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Scorecard.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/StateProvince.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Tee.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/TeeColor.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/TeeShotAccuracy.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/UserRoles.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/WeatherCondition.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/ScorecardSummary.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/CourseSlopeRating.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+				<prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</prop>
+				<prop key="hibernate.query.substitutions">true 1, false 0, yes 'Y', no 'N'</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Hibernate transaction manager -->
+	<bean
+		id="golfTxManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+	</bean>
+
+	<!-- START DAOs -->
+	
+	<!-- Address DAO -->
+	<bean 
+		id="addressDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateAddressDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateAddress" />		
+	</bean>
+	<bean id="HibernateAddress" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Address" />	
+	
+	<!-- Course DAO -->
+	<bean 
+		id="courseDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateCourseDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateCourse" />		
+	</bean>
+	<bean id="HibernateCourse" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Course" />	
+		
+	<!-- State-Province DAO -->
+	<bean 
+		id="stateProvinceDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateStateProvinceDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateStateProvince" />				
+	</bean>
+	<bean id="HibernateStateProvince" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.StateProvince" />	
+		
+	<!-- Tee color DAO -->
+	<bean 
+		id="teeColorDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateTeeColorDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateTeeColor" />
+	</bean>
+	<bean id="HibernateTeeColor" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.TeeColor" />
+		
+	<!-- Hole DAO -->
+	<bean 
+		id="holeDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateHoleDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateHole" />
+	</bean>
+	<bean id="HibernateHole" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Hole" />
+		
+	<!-- Tee DAO -->
+	<bean 
+		id="teeDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateTeeDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateTee" />
+	</bean>
+	<bean id="HibernateTee" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Tee" />
+		
+	<!-- Eye-wear DAO -->
+	<bean 
+		id="eyeWearDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateEyeWearDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateEyeWear" />		
+	</bean>
+	<bean id="HibernateEyeWear" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.EyeWear" />
+		
+	<!-- Pant-wear DAO -->
+	<bean 
+		id="pantWearDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernatePantWearDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernatePantWear" />
+	</bean>
+	<bean id="HibernatePantWear" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.PantWear" />	
+		
+	<!-- Head-wear DAO -->
+	<bean 
+		id="headWearDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateHeadWearDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateHeadWear" />		
+	</bean>
+	<bean id="HibernateHeadWear" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.HeadWear" />	
+		
+	<!-- Weather-condition DAO -->
+	<bean 
+		id="weatherConditionDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateWeatherConditionDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateWeatherCondition" />		
+	</bean>
+	<bean id="HibernateWeatherCondition" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.WeatherCondition" />		
+		
+	<!-- Player DAO -->
+	<bean 
+		id="playerDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernatePlayerDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernatePlayer" />		
+	</bean>
+	<bean id="HibernatePlayer" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Player" />
+		
+	<!-- User role DAO -->
+	<bean 
+		id="userRoleDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateUserRoleDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateUserRole" />		
+	</bean>
+	<bean id="HibernateUserRole" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.UserRoles" />	
+		
+	<!-- Course slope-rating DAO -->
+	<bean 
+		id="courseSlopeRatingDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateCourseSlopeRatingDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateCourseSlopeRating" />		
+	</bean>
+	<bean id="HibernateCourseSlopeRating" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.CourseSlopeRating" />		
+
+	<!-- Scorecard DAO -->
+	<bean 
+		id="scorecardDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateScorecardDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateScorecard" />		
+	</bean>
+	<bean id="HibernateScorecard" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Scorecard" />
+		
+	<!-- ScorecardSummary DAO -->
+	<bean 
+		id="scorecardSummaryDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateScorecardSummaryDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateScorecardSummary" />		
+	</bean>
+	<bean id="HibernateScorecardSummary" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.ScorecardSummary" />		
+		
+	<!-- Score DAO -->
+	<bean 
+		id="scoreDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateScoreDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateScore" />		
+	</bean>
+	<bean id="HibernateScore" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Score" />
+		
+	<!-- Approach shot distance DAO -->
+	<bean 
+		id="approachShotDistanceDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateApproachShotDistanceDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateApproachShotDistance" />		
+	</bean>
+	<bean id="HibernateApproachShotDistance" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.ApproachShotDistance" />
+		
+	<!-- Approach shot line DAO -->
+	<bean 
+		id="approachShotLineDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateApproachShotLineDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateApproachShotLine" />		
+	</bean>
+	<bean id="HibernateApproachShotLine" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.ApproachShotLine" />	
+		
+	<!-- Green-in-regulation DAO -->
+	<bean 
+		id="greenInRegulationDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateGreenInRegulationDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateGreenInRegulation" />		
+	</bean>
+	<bean id="HibernateGreenInRegulation" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.GreenInRegulation" />		
+		
+	<!-- Tee shot accuracy DAO -->
+	<bean 
+		id="teeShotAccuracyDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateTeeShotAccuracyDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateTeeShotAccuracy" />		
+	</bean>
+	<bean id="HibernateTeeShotAccuracy" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.TeeShotAccuracy" />
+		
+	<!-- Golf club DAO -->
+	<bean 
+		id="golfClubDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateGolfClubDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateGolfClub" />		
+	</bean>
+	<bean id="HibernateGolfClub" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.GolfClub" />								
+		
+	<!-- END DAOs -->
+	
+	<!-- DAO Utils object -->
+	<bean 
+		id="daoUtils" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateDAOUtils"
+		singleton="true">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="transactionManager" ref="golfTxManager" />
+	</bean>
+	
+	<!-- Utility object -->
+	<bean 
+		id="utilityObject" 
+		class="name.paulevans.golf.util.NewUtil"
+		singleton="true" />
+
+</beans>

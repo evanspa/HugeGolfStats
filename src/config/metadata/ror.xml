@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="http://www.rorweb.com/ror.css" type="text/css"?>
+<!-- This is a ROR formatted XML document describing the resources of the website http://www.hugegolfstats.com/golf-statistics/Welcome.do. For information about the ROR format, go to www.rorweb.com --> 
+<rdf:RDF xmlns="http://rorweb.com/0.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"> 
+
+<!-- ******************** Main Info ******************** --> 
+<Resource rdf:about="main">
+    <rorinfo>This is a ROR formatted XML document describing the resources of the website http://www.hugegolfstats.com/golf-statistics/Welcome.do. For information about the ROR format, go to www.rorweb.com</rorinfo>
+    <type>Main</type>
+    <type>Website</type>
+    <title>HugeGolfStats.com</title>
+    <url>http://www.hugegolfstats.com/golf-statistics/Welcome.do</url>
+    <desc>Allows golfers to input scores and statistics and will generate reports and graphs showing trends about their game.  </desc>
+    <keywords>huge golf stats,huge golf,huge stats,improve golf game,statistics,golf scorecard,golf scoring,golf software,golf statistics,golf stats,golf,leadbetter,pelz,scorecard,tracking,butch harmon,dave pelz,david leadbetter,golf digest,golf handicap,golf magazine,handicap,hank haney,improve golf game,improve my golf game,jim flick,jim mclean,stat tracking,track golf handicap,usga golf handicap,usga handicap,better golf,tiger woods,best golf stats,huge golf stats,hugegolfstats,hugegolfstats.com,paul evans,jason zuback,zuback,long drive,drive tracker,free golf stats,free golf statistics</keywords>
+</Resource>
+
+<!-- ******************** Contact Info ***************** --> 
+<Resource rdf:about="contact">
+    <type>Contact</type>
+    <title>Contact Info</title>
+    <name>HugeGolfStats.com</name>
+    <url>http://www.hugegolfstats.com/golf-statistics/Welcome.do</url>
+    <phone>5183730028</phone>
+    <resourceOf rdf:resource="main"/>
+</Resource>
+
+<Resource rdf:about="address">
+    <type>Address</type>
+    <title>Address</title>
+    <address1>6 Anchor Drive</address1>
+    <city>Waterford</city>
+    <postalCode>12188</postalCode>
+    <stateRegion>NY</stateRegion>
+    <country>US</country>
+    <resourceOf rdf:resource="contact"/>
+</Resource>
+
+<!-- ******************** Site Map Info ***************** --> 
+<Resource rdf:about="sitemap">
+    <type>SiteMap</type>
+    <title>Sitemap Information</title>
+    <sitemapGoogle>http://</sitemapGoogle>
+    <sitemapROR>http://</sitemapROR>
+    <sitemapYahoo></sitemapYahoo>
+    <resourceOf rdf:resource="main"/>
+</Resource>
+
+<Resource rdf:about="map-about">
+    <title>About</title>
+    <seeAlso rdf:resource="main"/>
+    <resourceOf rdf:resource="sitemap"/>
+</Resource>
+
+<Resource rdf:about="map-contact">
+    <title>Contact</title>
+    <seeAlso rdf:resource="contact"/>
+    <resourceOf rdf:resource="sitemap"/>
+</Resource>
+
+</rdf:RDF>
+
+
+
+
+
+

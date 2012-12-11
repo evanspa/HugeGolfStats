@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- JDBC Data source -->
+	<bean
+		id="golfDataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/golf_statistics_production?autoReconnect=true" />
+		<property name="username" value="hgs_golf_user" />
+		<property name="password" value="g01fu53r" />
+	</bean>
+
+	<!-- JavaMail session -->
+	<!-- <bean 
+		id="mailSession" 
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/mail/Session" />
+	</bean>-->
+	
+	<!-- Hibernate session factory -->
+	<bean
+		id="golfSessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="golfDataSource" />
+		<property name="mappingResources">
+			<list>
+				<value>gen/hibernate/name/paulevans/golf/ApproachShotDistance.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/ApproachShotLine.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Country.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Locale.hbm.xml</value>				
+				<value>gen/hibernate/name/paulevans/golf/CalendarMonth.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Course.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/EyeWear.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/GolfBall.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/GolfClub.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/GreenInRegulation.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/HeadWear.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Hole.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/PantWear.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Player.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Score.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Scorecard.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/StateProvince.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/Tee.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/TeeName.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/TeeShotAccuracy.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/UserRoles.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/WeatherCondition.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/ScorecardSummary.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/CourseSlopeRating.hbm.xml</value>	
+				<value>gen/hibernate/name/paulevans/golf/SavedChart.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/RoundCircumstance.hbm.xml</value>
+				<value>gen/hibernate/name/paulevans/golf/SavedChartCircumstance.hbm.xml</value>		
+			</list>
+		</property>
+		<property name="hibernateProperties" ref="hibernateProperties" />
+	</bean>
+	
+	<!-- Hibernate Properties -->
+	<bean id="hibernateProperties" 
+ 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+ 		<property name="properties">
+  			<props>
+   				<prop 
+    				key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+   				<prop 
+   					key="hibernate.query.substitutions">true 1, false 0, yes 'Y', no 'N'</prop>
+   				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</prop>
+  			</props>
+ 		</property>
+	</bean>
+	
+	<!-- Hibernate transaction manager -->
+	<bean
+		id="golfTxManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+	</bean>
+	
+	<!-- Email sender -->
+	<!--<bean 
+		id="mailSender" 
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+			<property name="session" ref="mailSession" />
+	</bean>-->
+	
+	<!-- Email notification manager -->
+	<bean 
+		id="notificationMgr" 
+		class="name.paulevans.golf.mail.impl.NotificationManagerImpl">
+		<property name="mailSender" ref="mailSender" />
+	</bean>
+
+	<!-- START DAOs -->
+	
+	<!-- Course DAO -->
+	<bean 
+		id="courseDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateCourseDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateCourse" />		
+	</bean>
+	<bean id="HibernateCourse" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Course" />	
+		
+	<!-- State-Province DAO -->
+	<bean 
+		id="stateProvinceDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateStateProvinceDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateStateProvince" />				
+	</bean>
+	<bean id="HibernateStateProvince" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.StateProvince" />	
+		
+	<!-- Tee name DAO -->
+	<bean 
+		id="teeNameDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateTeeNameDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateTeeName" />
+	</bean>
+	<bean id="HibernateTeeName" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.TeeName" />
+		
+	<!-- Hole DAO -->
+	<bean 
+		id="holeDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateHoleDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateHole" />
+	</bean>
+	<bean id="HibernateHole" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Hole" />
+		
+	<!-- Tee DAO -->
+	<bean 
+		id="teeDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateTeeDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateTee" />
+	</bean>
+	<bean id="HibernateTee" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Tee" />
+	
+	<!-- Eye-wear DAO -->
+	<bean 
+		id="eyeWearDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateEyeWearDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateEyeWear" />		
+	</bean>
+	<bean id="HibernateEyeWear" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.EyeWear" />	
+	
+	<!-- Calendar-month DAO -->
+	<bean 
+		id="calendarMonthDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateCalendarMonthDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateCalendarMonth" />		
+	</bean>
+	<bean id="HibernateCalendarMonth" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.CalendarMonth" />
+		
+	<!-- Pant-wear DAO -->
+	<bean 
+		id="pantWearDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernatePantWearDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernatePantWear" />
+	</bean>
+	<bean id="HibernatePantWear" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.PantWear" />	
+		
+	<!-- Head-wear DAO -->
+	<bean 
+		id="headWearDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateHeadWearDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateHeadWear" />		
+	</bean>
+	<bean id="HibernateHeadWear" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.HeadWear" />	
+		
+	<!-- Weather-condition DAO -->
+	<bean 
+		id="weatherConditionDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateWeatherConditionDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateWeatherCondition" />		
+	</bean>
+	<bean id="HibernateWeatherCondition" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.WeatherCondition" />		
+		
+	<!-- Player DAO -->
+	<bean 
+		id="playerDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernatePlayerDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernatePlayer" />		
+	</bean>
+	<bean id="HibernatePlayer" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Player" />
+		
+	<!-- User role DAO -->
+	<bean 
+		id="userRoleDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateUserRoleDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateUserRole" />		
+	</bean>
+	<bean id="HibernateUserRole" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.UserRoles" />	
+		
+	<!-- Course slope-rating DAO -->
+	<bean 
+		id="courseSlopeRatingDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateCourseSlopeRatingDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateCourseSlopeRating" />		
+	</bean>
+	<bean id="HibernateCourseSlopeRating" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.CourseSlopeRating" />		
+
+	<!-- Scorecard DAO -->
+	<bean 
+		id="scorecardDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateScorecardDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateScorecard" />		
+	</bean>
+	<bean id="HibernateScorecard" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Scorecard" />
+		
+	<!-- ScorecardSummary DAO -->
+	<bean 
+		id="scorecardSummaryDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateScorecardSummaryDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateScorecardSummary" />		
+	</bean>
+	<bean id="HibernateScorecardSummary" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.ScorecardSummary" />		
+		
+	<!-- Score DAO -->
+	<bean 
+		id="scoreDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateScoreDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateScore" />		
+	</bean>
+	<bean id="HibernateScore" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.Score" />
+		
+	<!-- Approach shot distance DAO -->
+	<bean 
+		id="approachShotDistanceDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateApproachShotDistanceDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateApproachShotDistance" />		
+	</bean>
+	<bean id="HibernateApproachShotDistance" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.ApproachShotDistance" />
+		
+	<!-- Approach shot line DAO -->
+	<bean 
+		id="approachShotLineDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateApproachShotLineDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateApproachShotLine" />		
+	</bean>
+	<bean id="HibernateApproachShotLine" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.ApproachShotLine" />	
+		
+	<!-- Green-in-regulation DAO -->
+	<bean 
+		id="greenInRegulationDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateGreenInRegulationDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateGreenInRegulation" />		
+	</bean>
+	<bean id="HibernateGreenInRegulation" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.GreenInRegulation" />		
+		
+	<!-- Tee shot accuracy DAO -->
+	<bean 
+		id="teeShotAccuracyDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateTeeShotAccuracyDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateTeeShotAccuracy" />		
+	</bean>
+	<bean id="HibernateTeeShotAccuracy" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.TeeShotAccuracy" />
+		
+	<!-- Golf club DAO -->
+	<bean 
+		id="golfClubDAO" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateGolfClubDAO"
+		singleton="false">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="delegate" ref="HibernateGolfClub" />		
+	</bean>
+	<bean id="HibernateGolfClub" singleton="false"
+		class="gen.hibernate.name.paulevans.golf.GolfClub" />								
+		
+	<!-- END DAOs -->
+	
+	<!-- DAO Utils object -->
+	<bean 
+		id="daoUtils" 
+		class="name.paulevans.golf.dao.impl.hibernate.HibernateDAOUtils"
+		singleton="true">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="transactionManager" ref="golfTxManager" />
+	</bean>
+	
+	<!-- Encryption Utils object -->
+	<bean 
+		id="encryptionUtils" 
+		class="name.paulevans.golf.util.impl.EncryptionUtilsImpl"
+		singleton="true">
+		<property name="encryptionAlgorithm" value="MD5" />
+	</bean>
+	
+	<!-- DataLoadTool object -->
+	<bean 
+		id="DataLoadTool" 
+		class="name.paulevans.golf.tools.DataLoadTool"
+		singleton="true">
+		<property name="sessionFactory" ref="golfSessionFactory" />
+		<property name="transactionManager" ref="golfTxManager" />
+	</bean>
+	
+	<!-- Date format display object -->
+	<bean id="dateFormatDisplay" class="java.text.SimpleDateFormat" singleton="true">
+		<constructor-arg type="java.lang.String"><value>EEEE, MMM dd, yyyy</value></constructor-arg>
+	</bean>
+	
+	<!-- Date format display object -->
+	<bean id="dateFormatInput" class="java.text.SimpleDateFormat" singleton="true">
+		<constructor-arg type="java.lang.String"><value>MM/dd/yyyy</value></constructor-arg>
+	</bean>	
+	
+	<!-- Utility object -->
+	<bean 
+		id="utilityObject" 
+		class="name.paulevans.golf.util.NewUtil"
+		singleton="true">
+		<property name="dateFormatDisplay" ref="dateFormatDisplay" />
+		<property name="dateFormatInput" ref="dateFormatInput" />
+		
+		<!-- This parameter is not really used any more.  As of this writing, 
+			 when adding/editing a course, a course is defined as containing 
+			 18 holes; no more, no less. -->
+		<property name="numCourseHolesList">
+			<list><value>18</value></list>
+		</property>
+		
+		<!-- The set of available par values for any particular hole. -->
+		<property name="parValuesList">
+			<list>
+				<value>3</value>
+				<value>4</value>
+				<value>5</value>
+				<value>6</value>
+			</list>
+		</property>
+		
+		<!-- The set of available putt values for any particular hole. -->
+		<property name="puttValuesList">
+			<list>
+				<value>0</value>
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+				<value>4</value>
+				<value>5</value>
+				<value>6</value>
+			</list>
+		</property>
+	
+		<!-- The set of available values when choosing the front-9 starting hole number -->
+		<property name="front9StartingHolesList">
+			<list>
+				<value>1</value>
+				<value>10</value>
+				<value>19</value>
+			</list>
+		</property>
+		
+		<!-- The set of available values when choosing the back-9 starting hole number -->
+		<property name="back9StartingHolesList">
+			<list>
+				<value>10</value>
+				<value>19</value>
+				<value>28</value>
+			</list>
+		</property>
+	
+		<!-- The set of available score values for any particular hole. -->
+		<property name="scoreValuesList">
+			<list>
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+				<value>4</value>
+				<value>5</value>
+				<value>6</value>
+				<value>7</value>
+				<value>8</value>
+				<value>9</value>
+				<value>10</value>
+				<value>11</value>
+				<value>12</value>
+				<value>13</value>
+				<value>14</value>
+				<value>15</value>
+			</list>
+		</property>
+		
+		<!-- The default country ID to use when adding a course if the
+			 player's home-course is not set. -->
+		<property name="countryId" value="0" /> <!-- United States -->
+		
+		<!-- The default state-province ID to use when adding a course if the
+			 player's home-course is not set. -->
+		<property name="stateProvinceId" value="32" /> <!-- New York -->
+	
+		<!-- The default number of holes a couse has - used for defaulting
+			 the drop-down on the add-course form.  This parameter is not really 
+			 used any more.  As of this writing, when adding/editing a course, 
+			 a course is defined as containing 18 holes; no more, no less. -->
+		<property name="defaultNumCourseHoles" value="18" />	
+	
+		<!-- The default putt value when entering the score for a hole -->
+		<property name="defaultPuttValue" value="2" />
+	
+		<!-- The default par value when adding a new course -->
+		<property name="defaultParValue" value="4" />
+		
+		<!-- The email address of the administrator of the application -->
+		<property name="adminEmail" value="admin@HugeGolfStats.com" />
+		
+		<!-- The email address of the suggestions-inbox -->
+		<property name="suggestionsEmail" value="suggestions@HugeGolfStats.com" />
+		
+		<property name="linkToMenuMappings">
+			<map>
+				<entry>
+					<key><value>/Welcome.do</value></key>
+					<value>secure_home</value>
+				</entry>			
+				<entry>
+					<key><value>/Logout.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/ForgotUserId.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/ForgotPassword.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/CancelCreateAccount.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/Refresh-CreateAccount.do</value></key>
+					<value>not_secure_home</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-PostRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PostRound-page1-submit.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PostRound-page2-submit.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PostRound-page3-submit.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/PostRound-complete-display.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Previous-PostRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditRound-search.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditRound-search-results.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>		
+				<entry>
+					<key><value>/secure/EditRound-page1-submit.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Previous-EditRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditRound-page2-submit.do</value></key>
+					<value>rounds</value>
+				</entry>				
+				<entry>
+					<key><value>/secure/EditRound-page3-submit.do</value></key>
+					<value>rounds</value>
+				</entry>	
+				<entry>
+					<key><value>/secure/EditRound-complete-display.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/CancelRound.do</value></key>
+					<value>rounds</value>
+				</entry>	
+				<entry>
+					<key><value>/secure/Previous-EditRound-search-results.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ViewRound-page1.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-ViewRound-search.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-AddCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>				
+				<entry>
+					<key><value>/secure/Refresh-EditCourse-search.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-search-results.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>				
+				<entry>
+					<key><value>/secure/EditCourse-page1-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditCourse-page1-submit.do</value></key>
+					<value>courses</value>
+				</entry>						
+				<entry>
+					<key><value>/secure/Previous-EditCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/CancelCourse.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-page2-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditCourse-page2-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-page3-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditCourse-complete-display.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/AddCourse-page1-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-AddCourse-page1-submit.do</value></key>
+					<value>courses</value>
+				</entry>	
+				<entry>
+					<key><value>/secure/Previous-AddCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Previous-AddCourse-page2.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/AddCourse-page2-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-AddCourse-page2-submit.do</value></key>
+					<value>courses</value>
+				</entry>				
+				<entry>
+					<key><value>/secure/AddCourse-page3-submit.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/AddCourse-complete-display.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-ViewCourse-search.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ViewCourse-search-results.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ViewCourse-page1.do</value></key>
+					<value>courses</value>
+				</entry>
+				<entry>
+					<key><value>/secure/ViewRound-search-results.do</value></key>
+					<value>rounds</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Refresh-EditHomeCourse.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/CancelEditProfile.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditPersonalInfo-submit.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditAccountInfo-submit.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditHomeCourse-submit.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditPlayingHabits-submit.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/EditScorecard-submit.do</value></key>
+					<value>profile</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Putting-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Teeshot-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/GIR-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+				<entry>
+					<key><value>/secure/Approachshot-stats-refresh.do</value></key>
+					<value>yourstats</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

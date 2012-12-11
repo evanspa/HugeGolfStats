@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<!-- JavaMail session -->
+	<bean 
+		id="mailSession" 
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/mail/Session" />
+	</bean>
+		
+	<!-- Email sender -->
+	<bean 
+		id="mailSender" 
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+			<property name="session" ref="mailSession" />
+	</bean>
+	
+	<!-- Email notification manager -->
+	<bean 
+		id="notificationMgr" 
+		class="name.paulevans.golf.mail.impl.NotificationManagerImpl">
+		<property name="mailSender" ref="mailSender" />
+	</bean>
+</beans>

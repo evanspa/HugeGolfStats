@@ -1,0 +1,168 @@
+html { min-width: 600px; }
+
+body, div, td, th, h2, h3, h4 { /* redundant rules for bad browsers  */  
+	font-family: verdana,sans-serif;
+	font-size:    x-small;
+	voice-family: "\"}\"";
+	voice-family: inherit;
+	font-size: small;
+	color: #333;
+}  
+.clearhack { display: inline; } /*Clears Box Model Hack in IE5*/
+
+body {
+	background: #EDEBE3;
+	color: #333;
+	padding: 1em 20px 3em 20px;
+	margin: 0;
+}
+
+.footer {
+	text-align: center;
+}
+
+a { color: #06C; }
+a:hover { color: #333; }
+a:active { color: #000; }
+
+hr { height: .2em}
+
+p { line-height: 140%; }
+
+
+.required {
+	color: red;
+	font-weight: bold;
+}
+
+.error {
+	color: red;
+}
+
+table.form-table {
+	background-color:#ececec; 
+	width:100%;
+	padding:4px;
+}
+
+table.form-table td{
+	padding:2px;
+}
+
+table.form-table th {
+	text-align:right;
+	padding:2px;
+	border: thin dotted #CCC;
+}
+
+table.enter-round-scores-table {
+	background-color:#ececec; 
+	width:100%;
+	padding:4px;
+	border: thin dotted #000;
+}
+
+table.enter-round-scores-table td{
+	padding:2px;
+	font-size:90%;
+	border: thin dotted #CCC;
+}
+
+table.enter-round-scores-table th{
+	padding:2px;
+	text-align:right;
+	border: thin dotted #CCC;
+}
+
+table.enter-round-scores-table select {
+	font-size:90%;
+}
+
+.section {
+	background-color:#eeeeee;
+	padding:4px;
+}
+
+h1,h2 {
+	font-family: trebuchet ms;
+	font-weight: bold;
+	color: #333;
+}
+
+h1 {
+	font-size: 180%;
+	margin: 0;
+}
+
+h1 a { text-decoration: none; color: #333; }
+h1 a:hover { border-bottom: 1px dotted #666; color: #000; }
+
+h2 {
+	font-size: 140%;
+	padding-bottom: 2px;
+	border-bottom: 1px solid #CCC;
+	margin: 0;
+}
+
+.section-title {
+	font-size: 120%;
+	padding-bottom: 2px;
+	border-bottom: 1px solid #CCC;
+	margin: 0;
+}
+
+p.note {
+	background: #EEE;
+	padding: 4px;
+	font-family: tahoma;
+	font-size: 85%;
+	line-height: 130%;
+	margin-top: 0;
+}
+
+table.list-results {
+	border: thin solid #CCC;
+}
+
+table.list-results td {
+	border: thin dotted #CCC; 
+	padding: 3px;
+}
+
+table.list-results th {
+	border: thin dotted #CCC; 
+	padding: 3px;
+}
+
+table.statsum { 
+	border: thin solid #CCC;
+}
+
+table.statsum td { 
+	border: thin dotted #CCC; 
+	padding: 3px
+}
+
+table.statsum th{
+	border: thin dotted #CCC; 
+	padding: 3px;
+	text-align: right;
+}
+
+.button {
+	font-family: lucida-console;
+	font-size:110%;
+	font-weight:bold;
+}
+
+table.legend { 
+	background-color:#ececec; 
+	padding:4px;
+}
+td.legend { font-weight: bold }
+.ace { font-weight: bold; background-color: #CC6666; }
+.birdie { font-weight: bold; background-color: #9999CC; }
+.eagle { font-weight: bold; background-color: #FFCC66; }
+.par { font-weight: bold; background-color: #FFFFFF; text-align:center }
+.bogey { font-weight: bold; background-color: #99CC99; text-align:center } 
+.dblbogey { font-weight: bold; background-color: #CC9966; text-align:center }

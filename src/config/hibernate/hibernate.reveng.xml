@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-reverse-engineering 
+  SYSTEM "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+
+	<!-- exclude the uid_table  -->
+	<table-filter match-name="uid_table" exclude="true" />
+
+	<!-- player table -->
+	<table name="player" catalog="golf_statistics_production"> 
+		<primary-key>
+   			<!-- us table hi-lo generator -->
+			<generator class="hilo">
+    			<param name="table">uid_table</param>
+                <param name="column">next_hi_value_column</param>
+  			</generator>
+   			<key-column name="id" />
+ 		</primary-key>
+	</table>
+	
+	<!-- local_rules table -->
+	<table name="local_rules" catalog="golf_statistics_production"> 
+		<primary-key>
+   			<!-- us table hi-lo generator -->
+			<generator class="hilo">
+    			<param name="table">uid_table</param>
+                <param name="column">next_hi_value_column</param>
+  			</generator>
+   			<key-column name="id" />
+ 		</primary-key>
+	</table>
+	
+	<!-- course table -->
+	<table name="course" catalog="golf_statistics_production"> 
+		<primary-key>
+   			<!-- us table hi-lo generator -->
+			<generator class="hilo">
+    			<param name="table">uid_table</param>
+                <param name="column">next_hi_value_column</param>
+  			</generator>
+   			<key-column name="id" />
+ 		</primary-key>
+	</table>
+	
+	<!-- hole table -->
+	<table name="hole" catalog="golf_statistics_production"> 
+		<primary-key>
+   			<!-- us table hi-lo generator -->
+			<generator class="hilo">
+    			<param name="table">uid_table</param>
+                <param name="column">next_hi_value_column</param>
+  			</generator>
+   			<key-column name="id" />
+ 		</primary-key>
+	</table>	
+	
+	<!-- tee_name table -->
+	<table name="tee_name" catalog="golf_statistics_production"> 
+		<primary-key>
+   			<!-- us table hi-lo generator -->
+			<generator class="hilo">
+    			<param name="table">uid_table</param>
+                <param name="column">next_hi_value_column</param>
+  			</generator>
+   			<key-column name="id" />
+ 		</primary-key>
+	</table>
+	
+	<!-- address table -->
+	<table name="address" catalog="golf_statistics_production"> 
+		<primary-key>
+   			<!-- us table hi-lo generator -->
+			<generator class="hilo">
+    			<param name="table">uid_table</param>
+                <param name="column">next_hi_value_column</param>
+  			</generator>
+   			<key-column name="id" />
+ 		</primary-key>
+	</table>	
+	
+	<!-- scorecard table -->
+	<table name="scorecard" catalog="golf_statistics_production"> 
+		<primary-key>
+   			<!-- us table hi-lo generator -->
+			<generator class="hilo">
+    			<param name="table">uid_table</param>
+                <param name="column">next_hi_value_column</param>
+  			</generator>
+   			<key-column name="id" />
+ 		</primary-key>
+	</table>	
+</hibernate-reverse-engineering>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1.3//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_1_3.dtd">
+
+<form-validation>
+
+    <formset>
+    
+    	<!-- Round Form -->
+    	<form name="RoundForm">
+    		
+    		<!-- require the user chooses at least 1 set of holes played -->
+    		<field property="holesPlayed" depends="holesrequired" />
+    		
+    		<!-- require the overall score -->
+    		<field property="overallScore" depends="overallscorerequired" />
+    		
+    		<!-- max-length of the scorer field is 255 chars -->
+    		<field property="scorer" depends="maxlength">
+    			<arg0 key="round.scorer" />
+    			<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+		        <var>
+		        	<var-name>maxlength</var-name>
+		        	<var-value>255</var-value>
+		        </var>
+    		</field>
+    		
+    		<!-- max-length of the attested-by field is 255 chars -->
+    		<field property="attestedBy" depends="maxlength">
+    			<arg0 key="round.attestedby" />
+    			<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+		        <var>
+		        	<var-name>maxlength</var-name>
+		        	<var-value>255</var-value>
+		        </var>
+    		</field>
+    		
+    		<!-- max-length of the journal-notes field is 2000 chars -->
+    		<field property="journalNotes" depends="maxlength">
+    			<arg0 key="round.journalnotes" />
+    			<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+		        <var>
+		        	<var-name>maxlength</var-name>
+		        	<var-value>2000</var-value>
+		        </var>
+    		</field>    		    		
+    	</form>
+    
+    	<!-- Add/Edit Course Form -->
+    	<form name="CourseForm">
+    		
+    		<!-- require course name and the max-length is 255 chars -->
+    		<field property="courseName" depends="required,maxlength">
+    			<arg0 key="course.coursename" />
+    			<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+		        <var>
+		        	<var-name>maxlength</var-name>
+		        	<var-value>255</var-value>
+		        </var>
+    		</field>
+    		
+    		<!-- require course country -->
+    		<field property="countryId" depends="required,integer">
+    			<arg0 key="course.address.country" />
+    		</field>    		
+    		
+    		<!-- require state/province -->
+    		<field property="stateProvinceId" depends="required,integer">
+    			<arg0 key="course.address.state_province" />
+    		</field>     		
+    		
+    		<!-- require course city and the max-length is 255 chars-->
+    		<field property="city" depends="required,maxlength">
+    			<arg0 key="course.address.city" />
+    			<arg1 name="maxlength" key="${var:maxlength}" resource="false" />
+		        <var>
+		        	<var-name>maxlength</var-name>
+		        	<var-value>255</var-value>
+		        </var>    			
+    		</field>
+    		
+    		<!-- require num holes -->
+    		<field property="numHoles" depends="required,integer">
+    			<arg0 key="course.numberofholes" />
+    		</field> 
+    		
+    		<!-- require at least one tee color be selected -->
+    		<field property="courseTees" depends="teecolorrequired" />
+    		
+    		<!-- validate the starting hole numbers -->
+    		<field property="front9StartingHole" depends="startingholesrequired" />
+
+			<!-- require positive-integer slope values for each tee color -->
+			<field property="slopeValues" depends="slopesrequired" />
+			
+			<!-- require positive-float rating values for each tee color -->
+			<field property="ratingValues" depends="ratingsrequired" />
+			
+			<!-- require positive-integer handicap values for each tee color -->
+			<!-- <field property="handicapValues" depends="handicapsrequired" />-->
+			
+			<!-- require positive-integer yardage values for each tee color -->
+			<!-- <field property="yardageValues" depends="yardagesrequired" />-->
+    	</form>
+    
+        <!-- Create / Edit Profile AccountForm -->
+        <form name="ProfileForm">
+        
+        	<!-- require first name -->
+            <field property="firstName" depends="required">
+            	<arg0 key="profile.firstname" />
+            </field>
+            
+            <!-- require last name -->
+            <field property="lastName" depends="required">
+            	<arg0 key="profile.lastname" />
+            </field>
+            
+            <!-- require residence postal-code -->
+            <field property="postalCode" depends="required">
+            	<arg0 key="profile.postalcode" />
+            </field>            
+            
+            <!-- require birthday month -->
+            <field property="birthdayMonth" depends="required">
+            	<arg0 key="profile.errors.birthdaymonth" />
+            </field>
+            
+            <!-- require birthday day -->
+            <field property="birthdayDay" depends="required">
+            	<arg0 key="profile.errors.birthdayday" />
+            </field>
+            
+            <!-- require birthday year -->
+            <field property="birthdayYear" depends="required">
+            	<arg0 key="profile.errors.birthdayyear" />
+            </field>         
+            
+            <!-- require unique email address -->
+            <field property="emailAddress" depends="required,email,validateemail">
+            	<msg name="email" key="profile.errors.emailaddress" />
+            	<arg0 key="profile.emailaddress" />
+            </field>         
+            
+            <!-- require unique user id -->
+            <field property="userId" depends="required,validateuserid">
+            	<arg0 key="profile.userid" />
+            </field> 
+            
+            <!-- require password -->
+            <field property="password" depends="validatepassword" />
+        </form>
+        
+        <!-- Forgot user id form -->
+        <form name="ForgotUserIdForm">        
+            
+            <!-- require birthday month -->
+            <field property="birthdayMonth" depends="required">
+            	<arg0 key="profile.errors.birthdaymonth" />
+            </field>
+            
+            <!-- require birthday day -->
+            <field property="birthdayDay" depends="required">
+            	<arg0 key="profile.errors.birthdayday" />
+            </field>
+            
+            <!-- require birthday year -->
+            <field property="birthdayYear" depends="required">
+            	<arg0 key="profile.errors.birthdayyear" />
+            </field>         
+            
+            <!-- require email address -->
+            <field property="emailAddress" depends="required,email">
+            	<msg name="email" key="profile.errors.emailaddress" />
+            	<arg0 key="profile.emailaddress" />
+            </field>         
+            
+            <!-- require residence postal-code -->
+            <field property="postalCode" depends="required">
+            	<arg0 key="profile.postalcode" />
+            </field>              
+		</form>
+		
+        <!-- Forgot password form -->
+        <form name="ForgotPasswordForm">        
+            
+            <!-- require birthday month -->
+            <field property="birthdayMonth" depends="required">
+            	<arg0 key="profile.errors.birthdaymonth" />
+            </field>
+            
+            <!-- require birthday day -->
+            <field property="birthdayDay" depends="required">
+            	<arg0 key="profile.errors.birthdayday" />
+            </field>
+            
+            <!-- require birthday year -->
+            <field property="birthdayYear" depends="required">
+            	<arg0 key="profile.errors.birthdayyear" />
+            </field>         
+            
+            <!-- require unique user id -->
+            <field property="userId" depends="required">
+            	<arg0 key="profile.userId" />
+            </field>         
+            
+            <!-- require residence postal-code -->
+            <field property="postalCode" depends="required">
+            	<arg0 key="profile.postalcode" />
+            </field>              
+		</form>		
+    </formset>
+</form-validation>

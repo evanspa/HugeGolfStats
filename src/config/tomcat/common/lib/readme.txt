@@ -1,0 +1,1 @@
+Place the jars file located in this directory into %CATALINA_HOME%\common\lib

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+		
+	<!-- CHART CATEGORIES -->
+	<bean id="girChartCategory" class="name.paulevans.golf.bean.chart.ChartCategory" singleton="true">
+		<property name="titleKey" value="yourstats.gir.heading" />
+		<property name="chartGroups">
+			<list>
+				<ref bean="GIRGroup" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- GIR chart group -->
+	<bean id="GIRGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="PercentagesTrendChart" />
+				<ref bean="BreakdownPieChart" />
+				<ref bean="FullBreakdownTrendChart" />
+				<ref bean="FullBreakdownPieChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- GIR CHARTS -->
+	<bean id="PercentagesTrendChart" class="name.paulevans.golf.bean.chart.gir.PercentagesTrend" singleton="true">
+		<property name="titleKey" value="yourstats.gir.charts.girpercentage.trend" />
+	</bean>
+	<bean id="BreakdownPieChart" class="name.paulevans.golf.bean.chart.gir.BreakdownPie" singleton="true">
+		<property name="titleKey" value="yourstats.gir.charts.breakdown.pie" />
+	</bean>
+	<bean id="FullBreakdownTrendChart" class="name.paulevans.golf.bean.chart.gir.FullBreakdownTrend" singleton="true">
+		<property name="titleKey" value="yourstats.gir.charts.fullbreakdown.trend" />
+	</bean>
+	<bean id="FullBreakdownPieChart" class="name.paulevans.golf.bean.chart.gir.FullBreakdownPie" singleton="true">
+		<property name="titleKey" value="yourstats.gir.charts.fullbreakdown.pie" />
+	</bean>
+</beans>

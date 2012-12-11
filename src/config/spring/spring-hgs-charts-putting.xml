@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+		
+	<!-- CHART CATEGORIES -->
+	<bean id="puttingChartCategory" class="name.paulevans.golf.bean.chart.ChartCategory" singleton="true">
+		<property name="titleKey" value="yourstats.putting.heading" />
+		<property name="chartGroups">
+			<list>
+				<ref bean="AvgPuttsPerHoleTrendGroup" />
+				<ref bean="AvgPuttsPerRoundTrendGroup" />
+				<ref bean="NumPuttsPerHolePieGroup" />
+				<ref bean="NumPuttsPerHoleTrendGroup" />
+				<ref bean="Num01PuttsPerHoleTrendGroup" />
+				<ref bean="Num2PuttsPerHoleTrendGroup" />
+				<ref bean="Num3PuttsPerHoleTrendGroup" />
+				<ref bean="Num4PuttsPerHoleTrendGroup" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Avg putts per-hole chart group -->
+	<bean id="AvgPuttsPerHoleTrendGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="AvgPuttsPerHoleTrendChart" />
+				<ref bean="AvgPuttsGIRPerHoleTrendChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Avg putts per-round chart group -->
+	<bean id="AvgPuttsPerRoundTrendGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="AvgPuttsPerRoundTrendChart" />
+				<ref bean="AvgPuttsGIRPerRoundTrendChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Num putts per-hole pie chart group -->
+	<bean id="NumPuttsPerHolePieGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="NumPuttsPerHolePieChart" />
+				<ref bean="NumPuttsGIRPerHolePieChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Num putts per-hole pie chart group -->
+	<bean id="NumPuttsPerHoleTrendGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="NumPuttsPerHoleTrendChart" />
+				<ref bean="NumPuttsGIRPerHoleTrendChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Num 0 and 1 putts per-hole chart group -->
+	<bean id="Num01PuttsPerHoleTrendGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="Num0PuttsPerRoundTrendChart" />
+				<ref bean="Num1PuttsPerRoundTrendChart" />
+				<ref bean="Num1PuttsGIRPerRoundTrendChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Num 2 putts per-hole chart group -->
+	<bean id="Num2PuttsPerHoleTrendGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="Num2PuttsPerRoundTrendChart" />
+				<ref bean="Num2PuttsGIRPerRoundTrendChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Num 3 putts per-hole chart group -->
+	<bean id="Num3PuttsPerHoleTrendGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="Num3PuttsPerRoundTrendChart" />
+				<ref bean="Num3PuttsGIRPerRoundTrendChart" />
+			</list>
+		</property>
+	</bean>	
+	
+		<!-- Num 4 putts per-hole chart group -->
+	<bean id="Num4PuttsPerHoleTrendGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="Num4PuttsPerRoundTrendChart" />
+				<ref bean="Num4PuttsGIRPerRoundTrendChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- PUTTING CHARTS -->
+	<bean id="AvgPuttsPerHoleTrendChart" class="name.paulevans.golf.bean.chart.putting.AvgPuttsPerHoleTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.avgputtsperhole.trend" />
+	</bean>
+	<bean id="AvgPuttsGIRPerHoleTrendChart" class="name.paulevans.golf.bean.chart.putting.AvgPuttsGIRPerHoleTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.avgputtsgirperhole.trend" />
+	</bean>
+	<bean id="AvgPuttsPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.AvgPuttsPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.avgputtsperround.trend" />
+	</bean>	
+	<bean id="AvgPuttsGIRPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.AvgPuttsGIRPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.avgputtsgirperround.trend" />
+	</bean>	
+	<bean id="NumPuttsPerHolePieChart" class="name.paulevans.golf.bean.chart.putting.NumPuttsPerHolePie" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.numputtsperhole.pie" />
+	</bean>	
+	<bean id="NumPuttsGIRPerHolePieChart" class="name.paulevans.golf.bean.chart.putting.NumPuttsGIRPerHolePie" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.numputtsgirperhole.pie" />
+	</bean>
+	<bean id="NumPuttsPerHoleTrendChart" class="name.paulevans.golf.bean.chart.putting.NumPuttsPerHoleTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.numputtsperhole.trend" />
+	</bean>	
+	<bean id="NumPuttsGIRPerHoleTrendChart" class="name.paulevans.golf.bean.chart.putting.NumPuttsGIRPerHoleTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.numputtsgirperhole.trend" />
+	</bean>	
+	<bean id="Num0PuttsPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.Num0PuttsPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.num0puttsperround.trend" />
+	</bean>	
+	<bean id="Num1PuttsPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.Num1PuttsPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.num1puttsperround.trend" />
+	</bean>	
+	<bean id="Num1PuttsGIRPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.Num1PuttsGIRPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.num1puttsgirperround.trend" />
+	</bean>	
+	<bean id="Num2PuttsPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.Num2PuttsPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.num2puttsperround.trend" />
+	</bean>	
+	<bean id="Num2PuttsGIRPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.Num2PuttsGIRPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.num2puttsgirperround.trend" />
+	</bean>	
+	<bean id="Num3PuttsPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.Num3PuttsPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.num3puttsperround.trend" />
+	</bean>	
+	<bean id="Num3PuttsGIRPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.Num3PuttsGIRPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.num3puttsgirperround.trend" />
+	</bean>		
+	<bean id="Num4PuttsPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.Num4PuttsPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.num4puttsperround.trend" />
+	</bean>	
+	<bean id="Num4PuttsGIRPerRoundTrendChart" class="name.paulevans.golf.bean.chart.putting.Num4PuttsGIRPerRoundTrend" singleton="true">
+		<property name="titleKey" value="yourstats.putting.charts.num4puttsgirperround.trend" />
+	</bean>		
+</beans>

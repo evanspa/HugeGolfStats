@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+		
+	<!-- CHART CATEGORIES -->
+	<bean id="approachshotChartCategory" class="name.paulevans.golf.bean.chart.ChartCategory" singleton="true">
+		<property name="titleKey" value="yourstats.approachshot.heading" />
+		<property name="chartGroups">
+			<list>
+				<ref bean="ApproachShotLineGroup" />
+				<ref bean="ApproachShotDistanceGroup" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Approach shot line chart group -->
+	<bean id="ApproachShotLineGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="APSLinePercentagesTrendChart" />
+				<ref bean="APSLineBreakdownPieChart" />
+				<ref bean="APSLineFullBreakdownTrendChart" />
+				<ref bean="APSLineFullBreakdownPieChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Approach shot distance chart group -->
+	<bean id="ApproachShotDistanceGroup" class="name.paulevans.golf.bean.chart.ChartGroup" singleton="true">
+		<property name="charts">
+			<list>
+				<ref bean="APSDistancePercentagesTrendChart" />
+				<ref bean="APSDistanceBreakdownPieChart" />
+				<ref bean="APSDistanceFullBreakdownTrendChart" />
+				<ref bean="APSDistanceFullBreakdownPieChart" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Approach shot CHARTS -->
+	<bean id="APSLinePercentagesTrendChart" class="name.paulevans.golf.bean.chart.approachshot.APSLinePercentagesTrend" singleton="true">
+		<property name="titleKey" value="yourstats.approachshot.line.charts.percentage.trend" />
+	</bean>
+	<bean id="APSLineBreakdownPieChart" class="name.paulevans.golf.bean.chart.approachshot.APSLineBreakdownPie" singleton="true">
+		<property name="titleKey" value="yourstats.approachshot.line.charts.breakdown.pie" />
+	</bean>
+	<bean id="APSLineFullBreakdownTrendChart" class="name.paulevans.golf.bean.chart.approachshot.APSLineFullBreakdownTrend" singleton="true">
+		<property name="titleKey" value="yourstats.approachshot.line.charts.fullbreakdown.trend" />
+	</bean>
+	<bean id="APSLineFullBreakdownPieChart" class="name.paulevans.golf.bean.chart.approachshot.APSLineFullBreakdownPie" singleton="true">
+		<property name="titleKey" value="yourstats.approachshot.line.charts.fullbreakdown.pie" />
+	</bean>
+	<bean id="APSDistancePercentagesTrendChart" class="name.paulevans.golf.bean.chart.approachshot.APSDistancePercentagesTrend" singleton="true">
+		<property name="titleKey" value="yourstats.approachshot.distance.charts.percentage.trend" />
+	</bean>
+	<bean id="APSDistanceBreakdownPieChart" class="name.paulevans.golf.bean.chart.approachshot.APSDistanceBreakdownPie" singleton="true">
+		<property name="titleKey" value="yourstats.approachshot.distance.charts.breakdown.pie" />
+	</bean>
+	<bean id="APSDistanceFullBreakdownTrendChart" class="name.paulevans.golf.bean.chart.approachshot.APSDistanceFullBreakdownTrend" singleton="true">
+		<property name="titleKey" value="yourstats.approachshot.distance.charts.fullbreakdown.trend" />
+	</bean>
+	<bean id="APSDistanceFullBreakdownPieChart" class="name.paulevans.golf.bean.chart.approachshot.APSDistanceFullBreakdownPie" singleton="true">
+		<property name="titleKey" value="yourstats.approachshot.distance.charts.fullbreakdown.pie" />
+	</bean>	
+</beans>

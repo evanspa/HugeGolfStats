@@ -1,0 +1,754 @@
+<project name="golf-statistics" default="dist-dev" basedir="."> 
+	
+	<!-- specify properties in build.properties -->
+	<property file="build.properties" />
+	
+	<!-- build classpath -->
+   	<path id="dist.project.class.path">
+       	<fileset dir="${thirdPartyLibDir}">
+       	    <include name="**/*.jar" />
+       		<exclude name="asm.test.jar" />
+      	</fileset>
+   		<fileset dir="${envLibDir}">
+   		    <include name="**/*.jar" />
+   		</fileset>
+   	</path>
+	
+	<!-- cobertura classpath -->
+   	<path id="cobertura.project.class.path">
+       	<fileset dir="${thirdPartyLibDir}">
+       	    <include name="**/*.jar" />
+       		<exclude name="asm.dist.jar" />
+      	</fileset>
+   		<fileset dir="${envLibDir}">
+   		    <include name="**/*.jar" />
+   		</fileset>
+   	</path>
+	
+	<!-- taskdef for ant-contrib tasks/elements -->
+	<taskdef 
+		resource="net/sf/antcontrib/antlib.xml" 
+		classpathref="dist.project.class.path" />
+	
+	<!-- taskdef for the xjc (jaxb) tasks -->
+	<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask"
+		classpathref="dist.project.class.path" />
+	
+	<!-- taskdef needed for Cobertura -->
+	<taskdef classpathref="cobertura.project.class.path" resource="tasks.properties" />
+	
+	<!-- The reason the "classpathref" attribute is because eclipse was 
+		 complaining it could not find the InstallTask, ListTask, and 
+		 RemoveTask.  I therefore had to put catalina-ant.jar into "envLibs" -->
+	<taskdef name="reload" classpathref="dist.project.class.path"
+		classname="org.apache.catalina.ant.ReloadTask" />
+	  
+	<!-- reload app from container -->
+	<target name="reload" description="Reload the application">
+		<reload url="${manager.url}"
+	       	    username="${manager.username}"
+	       	    password="${manager.password}"
+				path="/${ant.project.name}" />
+	 	</target>
+	  
+    <!-- Clean out previously built project files and javadoc -->
+    <target name="clean"> 
+    	<delete dir="${buildDir}" quiet="true" />
+		<delete dir="${distDir}" quiet="true" />
+    	<delete dir="${genReportsDir}" quiet="true" />
+		<delete dir="${coberturaDataFileDir}" quiet="true" />
+		<delete dir="${instrumentedClassesDir}" quiet="true" />
+    	
+    	<!-- remove generated "src/java" content -->
+       	<delete includeemptydirs="true" quiet="true">
+       		<fileset dir="${genDir}/src/java">
+       			<include name="**/*" />
+       		</fileset>
+       	</delete>
+    	
+    	<!-- remove generated "src/content" content -->
+       	<delete includeemptydirs="true" quiet="true">
+       		<fileset dir="${genDir}/src/content">
+       			<include name="**/*" />
+       		</fileset>
+       	</delete>
+    	
+    	<!-- remove generated "config/hibernate" content -->
+    	<delete includeemptydirs="true" quiet="true">
+    		<fileset dir="${genDir}/src/config/hibernate">
+    			<include name="**/*" />
+    		</fileset>
+    	</delete>
+  	</target>	
+	
+    <!-- Setup Steps Required Before Compilation -->
+    <target name="init"> 
+    	<mkdir dir="${buildDir}" /> 
+		<mkdir dir="${distDir}" /> 
+    	<mkdir dir="${genDir}/${contentDir}" />
+	</target> 
+	
+	<!-- compiles java source -->
+	<target name="compile" depends="gen">
+		<javac destdir="${buildDir}" deprecation="yes" debug="yes">
+			<src path="${javaDir}" />
+			<src path="${generatedJavaDir}" />
+			<classpath refid="dist.project.class.path" />
+		</javac> 
+	</target>
+	
+	<!-- Make development WAR file -->
+	<target name="dist-dev">
+		
+		<!-- create "region" property -->
+		<property name="region" value="development" />
+		
+		<!-- create hibernate-build.properties -->
+		<antcall target="generate-hibernate-build-properties" />
+		
+		<!-- invoke "dist" target -->
+		<antcall target="dist" />
+	</target>
+
+	<!-- Make production WAR file -->
+	<target name="dist-prod">
+		
+		<!-- create "region" property -->
+		<property name="region" value="production" />
+		
+		<!-- create hibernate-build.properties -->
+		<antcall target="generate-hibernate-build-properties" />
+		
+		<!-- invoke "dist" target -->
+		<antcall target="dist" />
+	</target>	
+	
+    <!-- Make project WAR file -->
+    <target name="dist" depends="compile">
+    	<war warfile="${distDir}/${ant.project.name}.war" 
+    		webxml="${configDir}/j2ee/web.xml">
+    		<webinf dir="${configDir}/struts">
+    			<include name="*.xml" />
+    		</webinf>
+    		<webinf dir="${configDir}/struts/tld">
+    		    <include name="*.tld" />
+    		</webinf>
+    		<webinf dir="${configDir}/j2ee/tld">
+    		    <include name="*.tld" />
+    		</webinf>
+    		<!--<metainf dir="${configDir}/tomcat">
+    			<include name="context.xml" />
+    		</metainf>-->
+    		<fileset dir="${contentDir}" />
+    		<fileset dir="${genDir}/${contentDir}" />
+    	    <lib dir="${thirdPartyLibDir}" />
+    	    <classes dir="${buildDir}">
+    	    	<include name="**/*.class" />
+    	    	<exclude name="**/test/*.class" /> <!-- exclude test classes -->
+    	    </classes>
+    		<classes dir="${srcDir}/i18n">
+    			<include name="*.properties" />
+    		</classes>
+    		<classes dir="${configDir}/logging">
+    			<include name="log4j.properties" />
+    		</classes>
+        	<classes dir="${configDir}/spring">
+        		<include name="**/*.xml" />
+        		<exclude name="non-container/*.xml" />
+        	</classes>
+    		<classes dir="${configDir}/cache">
+    			<include name="ehcache.xml" />
+    		</classes>
+    		<classes dir="${generatedMappingDir}">
+    			<include name="**/*.hbm.xml" />
+    		</classes>
+    		<classes dir="${srcDir}/literal">
+    			<include name="**/*.*" />
+    		</classes>
+    		<!--<classes dir="${configDir}/hibernate">
+    		    <include name="hibernate.properties" />
+    		</classes>-->
+    	</war>
+    	
+    	<unwar src="${distDir}/${ant.project.name}.war"
+    		dest="${distDir}/${ant.project.name}" />
+	</target> 
+	
+	<!-- Invoke the do-gen target if no mapping files exist -->
+	<target name="gen" depends="init">
+		
+		<!-- Only if the file: ${genDir}/${genSkipFilePath}/${genSkipFile} 
+			 exists will the "do-gen" target be executed -->
+		<available 
+			property="gen.skip"
+			filepath="${genDir}/${genSkipFilePath}"
+			file="${genSkipFile}" />
+		<if>
+			<equals arg1="${gen.skip}" arg2="true" />
+			<then>
+				<echo message="Generated-mapping files already exist.  Skipping hbm2hbmxml..." />
+			</then>
+			<else>
+				<echo message="Mapping files do not exist.  Executing hbm2hbmxml..." />
+				<antcall target="do-gen" />
+				<antcall target="update-mapping-files" />
+			</else>
+		</if>
+		<antcall target="jaxb-gen" />
+	</target>
+	
+	<!-- Generate java code from XSD files -->
+	<target name="jaxb-gen">
+	
+		<!-- Only if the file: ${genDir}/${jaxbGenSkipFilePath}/${jaxbGenSkipFile} 
+			 exists will the jaxb compiler be allowed to execute -->
+		<available 
+			property="gen.jaxb.skip"
+			filepath="${genDir}/${jaxbGenSkipFilePath}"
+			file="${jaxbGenSkipFile}" />
+		<if>
+			<equals arg1="${gen.jaxb.skip}" arg2="true" />
+			<then>
+				<echo message="Generated JAXB source already exists.  Skipping xjc..." />
+			</then>
+			<else>
+				<echo message="JAXB source does not exist, running xjc task..." />
+				<xjc
+					schema="${srcDir}/literal/menu.xsd"
+					package="gen.jaxb.name.paulevans.golf"
+					destdir="${generatedJavaDir}" />
+			</else>
+		</if>
+	</target>
+	
+	<!-- Updates various.hbm.xml files; hopefully in the future the hibernate
+	     tools reverse-engineering capability will render this target as being
+	     not-needed -->
+	<target name="update-mapping-files">
+		<!--<replace 
+			file="${generatedMappingDir}/gen/hibernate/name/paulevans/golf/Scorecard.hbm.xml"
+			token="${hbm.replacement.scorecard.token}"
+			value="${hbm.replacement.scorecard.value}" />-->
+	</target>
+	
+	<!-- Generate hibernate classes from database schema -->
+	<target name="do-gen">
+		
+		<!-- define the hibernate tool task -->
+		<taskdef name="hibernatetool" 
+			classname="org.hibernate.tool.ant.HibernateToolTask" 
+			classpathref="dist.project.class.path" />
+		
+		<!-- remove existing 'generated' java-src folder -->
+		<delete dir="${generatedJavaDir}" />
+		
+		<!-- remove existing mapping files -->
+		<delete includeemptydirs="true">
+    		<fileset dir="${genDir}/src/config/hibernate">
+    			<include name="**/*.hbm.xml" />
+    		</fileset>
+    	</delete>
+		
+		<!-- invoke hibernate tool to generate xml mapping files -->
+		<hibernatetool>
+			<jdbcconfiguration 
+				revengfile="${configDir}/hibernate/hibernate.reveng.xml"
+				packagename="gen.hibernate.name.paulevans.golf"
+				propertyfile="${genDir}/${configDir}/hibernate/hibernate-build.properties" />
+			<hbm2hbmxml destdir="${generatedMappingDir}" />
+		</hibernatetool>
+		
+		<!-- generate java code from xml mapping files -->
+		<hibernatetool destdir="${generatedJavaDir}">
+			<configuration 
+				propertyfile="${configDir}/hibernate/hibernate.properties">
+				
+				<fileset dir="${generatedMappingDir}">
+					<include name="**/*.hbm.xml"/>
+					<exclude name="**/TournamentReductionValues.hbm.xml" />
+				</fileset>
+			</configuration>
+			<hbm2java />
+		</hibernatetool>
+	</target> 
+	
+	<!-- Refresh the development database -->
+	<target name="refreshdb-dev">
+		<property name="region" value="development" />
+		<antcall target="db-backup" />
+		<antcall target="refreshdb" />
+		<!--<antcall target="db-restore" />-->
+	</target>
+	
+	<!-- Refresh the test database -->
+	<target name="refreshdb-test">
+		<property name="region" value="test" />
+		<antcall target="db-backup" />
+		<antcall target="refreshdb" />
+		<!--<antcall target="db-restore" />-->
+	</target>	
+	
+	<!-- Refresh the production database -->
+	<target name="refreshdb-prod">
+		<property name="region" value="production" />
+		<antcall target="db-backup" />
+		<antcall target="refreshdb" />
+		<!--<antcall target="db-restore" />-->
+	</target>	
+	
+	<!-- Restores the development region with the course-data -->
+	<target name="db-restore-courses-dev">	
+		<property name="region" value="development" />
+		<antcall target="db-restore-courses" />
+	</target>
+	
+	<!-- Restores one of the database regions from a backup -->
+	<target name="db-restore-courses">
+		<sql
+			driver="${jdbc.driver}"
+			url="${jdbc.url}/${jdbc.database-prefix}${region}"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			src="${genDir}/db-backup/${region}-courses.sql"
+			onerror="abort"
+			classpathref="dist.project.class.path" />	
+	</target>
+	
+	<!-- Backs-up one of the database regions -->
+	<target name="db-backup-courses-dev">
+		<property name="region" value="development" />
+		<antcall target="db-backup-courses" />
+	</target>
+
+	<!-- Backs-up one of the database regions -->
+	<target name="db-backup-courses">
+		<exec dir="${basedir}" executable="${mysql.home}/bin/mysqldump">
+			<arg value="--user=${jdbc.username}" />
+			<arg value="--password=${jdbc.password}" />
+			<arg value="--result-file=${genDir}/db-backup/${region}-courses.sql" />
+			<arg value="--complete-insert" />
+			<arg value="--single-transaction" />
+			<arg value="--quick" />
+			<arg value="--all" />
+			<arg value="--add-drop-table" />
+			<arg value="${jdbc.database-prefix}${region}" />
+			<arg value="course" />
+			<arg value="tee" />
+			<arg value="tee_name" />
+			<arg value="course_slope_rating" />
+			<arg value="eye_wear" />
+			<arg value="head_wear" />
+			<arg value="pant_wear" />
+			<arg value="weather_condition" />
+			<arg value="tournament_reduction_values" />
+			<arg value="golf_club" />
+			<arg value="golf_ball" />
+			<arg value="approach_shot_line" />
+			<arg value="approach_shot_distance" />
+			<arg value="tee_shot_accuracy" />
+			<arg value="green_in_regulation" />
+			<arg value="hole" />
+			<arg value="calendar_month" />
+			<arg value="state_province" />
+			<arg value="country" />
+			<arg value="uid_table" />
+		</exec>
+	</target>	
+	
+	<!-- Backs-up one of the database regions -->
+	<target name="db-backup">
+		<exec dir="${basedir}" executable="${mysql.home}/bin/mysqldump">
+			<arg value="--user=${jdbc.username}" />
+			<arg value="--password=${jdbc.password}" />
+			<arg value="--result-file=${genDir}/db-backup/full-database.sql" />
+			<arg value="--complete-insert" />
+			<arg value="--all-databases" />
+			<arg value="--single-transaction" />
+			<arg value="--quick" />
+			<arg value="--all" />
+			<arg value="--add-drop-table" />
+		</exec>
+	</target>
+	
+	<!-- Refreshes one of the database regions -->
+	<target name="refreshdb">
+		<!-- drop the database -->
+		<sql
+			driver="${jdbc.driver}"
+			url="${jdbc.url}/"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			src="${srcDir}/data-model/databases/${region}/sql-scripts/drop_database.sql"
+			onerror="continue"
+			classpathref="dist.project.class.path" />
+		
+		<!-- create the database -->
+		<sql
+			driver="${jdbc.driver}"
+			url="${jdbc.url}/"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			src="${srcDir}/data-model/databases/${region}/sql-scripts/create_database.sql"
+			classpathref="dist.project.class.path" />
+		
+		<!-- create the tables -->
+		<sql
+			driver="${jdbc.driver}"
+			url="${jdbc.url}/${jdbc.database-prefix}${region}"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			src="${genDir}/src/data-model/sql-scripts/create.sql"
+			classpathref="dist.project.class.path" />
+		
+		<!-- load the 'locale' data -->
+		<sql
+			driver="${jdbc.driver}"
+			url="${jdbc.url}/${jdbc.database-prefix}${region}"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			classpathref="dist.project.class.path"
+			src="${sqlScriptsDir}/locale_data.sql" />
+
+		<!-- load the 'prerequisite' data -->
+		<sql
+			driver="${jdbc.driver}"
+			url="${jdbc.url}/${jdbc.database-prefix}${region}"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			classpathref="dist.project.class.path"
+			src="${sqlScriptsDir}/load_geo_data.sql" />
+		
+		<!-- load the 'prerequisite' data -->
+		<sql
+			driver="${jdbc.driver}"
+			url="${jdbc.url}/${jdbc.database-prefix}${region}"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			classpathref="dist.project.class.path"
+			src="${sqlScriptsDir}/load_data.sql" />
+		
+		<!-- load the remaining data -->
+		<sql
+			driver="${jdbc.driver}"
+			url="${jdbc.url}/${jdbc.database-prefix}${region}"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			classpathref="dist.project.class.path">
+			<fileset dir="${sqlScriptsDir}">
+				<include name="**/*.sql" />
+				<exclude name="load_geo_data.sql" />
+				<exclude name="load_data.sql" />
+				<exclude name="players/players.sql" />
+				<exclude name="locale_data.sql" />
+			</fileset>
+		</sql>	
+		
+		<!-- load the player data -->
+		<sql
+			driver="${jdbc.driver}"
+			url="${jdbc.url}/${jdbc.database-prefix}${region}"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			classpathref="dist.project.class.path"
+			src="${sqlScriptsDir}/players/players.sql" />		
+	</target>
+	
+	<!-- Creates a dataset file needed for dbunit unit tests -->
+	<target name="create-dbunit-dataset" depends="compile">
+		<mkdir dir="${genDir}/dbunit" />
+		<java 
+			classname="name.paulevans.golf.test.TestUtils"
+			fork="true">
+			<classpath>
+				<path refid="dist.project.class.path" />
+				<pathelement location="${buildDir}" />
+			</classpath>
+			<!-- create system properties -->
+			<sysproperty key="jdbc.url" value="${jdbc.url}/${jdbc.database-prefix}test" />
+			<sysproperty key="jdbc.driver" value="${jdbc.driver}" />
+			<sysproperty key="jdbc.username" value="${jdbc.username}" />
+			<sysproperty key="jdbc.password" value="${jdbc.password}" />
+			<sysproperty key="dbunit.dataset.file" value="${genDir}/dbunit/dataset.xml" />
+		</java>
+	</target>
+	
+	<!-- Creates a hibernate-build.properties based on values in build.properties -->
+	<target name="generate-hibernate-build-properties">
+		
+		<!-- delete existing hibernate-build.properties -->
+		<delete file="${genDir}/${configDir}/hibernate/hibernate-build.properties" quiet="true" />
+		
+		<!-- copy hibernate template build properties file into the "gen" dir -->
+		<copy 
+			file="${configDir}/hibernate/hibernate-build-template.properties"
+			tofile="${genDir}/${configDir}/hibernate/hibernate-build.properties" />
+		
+		<!-- set values in new hibernate-build.properties -->
+		<replace file="${genDir}/${configDir}/hibernate/hibernate-build.properties"
+			token="hibernate.connection.driver_class="
+			value="hibernate.connection.driver_class=${jdbc.driver}" />
+		<replace file="${genDir}/${configDir}/hibernate/hibernate-build.properties"
+					token="hibernate.connection.url="
+					value="hibernate.connection.url=${jdbc.url}/${jdbc.database-prefix}${region}" />
+		<replace file="${genDir}/${configDir}/hibernate/hibernate-build.properties"
+					token="hibernate.connection.username="
+					value="hibernate.connection.username=${jdbc.username}" />
+		<replace file="${genDir}/${configDir}/hibernate/hibernate-build.properties"
+					token="hibernate.connection.password="
+					value="hibernate.connection.password=${jdbc.password}" />
+	</target>
+	
+	<!-- unit test the codebase -->
+	<target name="test" depends="clean">
+		
+		<!-- create "region" property -->
+		<property name="region" value="test" />
+		
+		<!-- create hibernate-build.properties -->
+		<antcall target="generate-hibernate-build-properties" />
+		
+		<!-- delete the gen/reports dir -->
+		<delete dir="${genReportsDir}" quiet="true" />
+		
+		<!-- refresh the "test" database -->
+		<antcall target="refreshdb-test" />
+		
+		<!-- invoke the "compile" target -->
+		<antcall target="compile" />
+		
+		<!-- invoke the "code-coverage-setup" target -->
+		<antcall target="code-coverage-setup" />
+		
+		<!-- make necessary dirs -->
+		<mkdir dir="${genReportsDir}/${rawTestResultsDir}" />
+		<mkdir dir="${genReportsDir}/${formattedTestResultsDir}" />
+		
+		<!-- copy resource files to the build-dir -->
+		<copy file="${srcDir}/unit-testing/i18n/GolfAppResources.properties"
+			todir="${buildDir}" />
+		<copy file="${srcDir}/unit-testing/spring/beans.xml" toDir="${buildDir}" />
+		<copy toDir="${buildDir}">
+			<fileset dir="${generatedMappingDir}" />
+		</copy>
+		
+		<!-- set the "catalog" attribute in each of the .hbm.xml files to the
+		     "test" database instance -->
+		<replace dir="${buildDir}">
+			<include name="**/*.hbm.xml" />
+			<replacetoken><![CDATA[catalog="golf_statistics_development"]]></replacetoken>
+			<replacevalue><![CDATA[catalog="golf_statistics_test"]]></replacevalue>
+		</replace>
+		
+		<!-- create the dbunit dataset file -->
+		<antcall target="create-dbunit-dataset" />
+				
+		<!-- run all junit tests using instrumented classes -->
+		<junit printsummary="yes" haltonfailure="no" 
+			failureproperty="tests.failed">
+			
+			<!-- Specify the name of the coverage data file to use.  The value 
+				 specified below is the default -->
+			<sysproperty key="net.sourceforge.cobertura.datafile" 
+				value="${coberturaDataFileDir}/${coberturaDataFile}" />	
+			
+			<!-- create system properties for dbunit tests -->
+			<sysproperty key="jdbc.url" value="${jdbc.url}/${jdbc.database-prefix}test" />
+			<sysproperty key="jdbc.driver" value="${jdbc.driver}" />
+			<sysproperty key="jdbc.username" value="${jdbc.username}" />
+			<sysproperty key="jdbc.password" value="${jdbc.password}" />
+			<sysproperty key="dbunit.dataset.file" value="${genDir}/dbunit/dataset.xml" />
+				
+			<!-- define the classpath for junit to use -->
+		  	<classpath>
+		  	
+				<!-- put instrumented classes into the classpath first -->
+				<pathelement location="${instrumentedClassesDir}" />
+				<pathelement location="${buildDir}" />
+		  	
+				<!-- put dependent jar files into the classpath -->
+				<path refid="dist.project.class.path" />
+			</classpath>
+			
+			<!-- use the xml formatter -->
+			<formatter type="xml"/>
+
+			<!-- execute the tests -->
+			<batchtest fork="yes" 
+				todir="${genReportsDir}/${rawTestResultsDir}">
+				<fileset dir="${buildDir}">
+					<include name="**/Test*.class" />
+					<exclude name="**/TestUtils.class" />
+				</fileset>
+			</batchtest>
+		</junit>
+		
+		<!-- create the formatted unit test results-report -->
+		<junitreport todir="${genReportsDir}/${formattedTestResultsDir}">
+			<fileset dir="${genReportsDir}/${rawTestResultsDir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" 
+				todir="${genReportsDir}/${formattedTestResultsDir}" />
+		</junitreport>
+		
+		<!-- create the formatted coverage report -->
+		<antcall target="code-coverage-report" />
+		
+		<!-- print alert if one or more tests failed -->
+	    <fail if="tests.failed">
+	      tests.failed=${tests.failed}
+	      ***********************************************************
+	      ***********************************************************
+	      ****  One or more tests failed!  Check the output ...  ****
+	      ***********************************************************
+	      ***********************************************************
+	    </fail>
+	</target>
+
+	
+	<!-- instrument the codebase for coverage analysis -->
+	<target name="code-coverage-setup">
+		
+		<!-- delete/create the destination folder -->
+		<delete dir="${instrumentedClassesDir}" />
+		<mkdir dir="${instrumentedClassesDir}" />	
+		
+		<!-- delete/create the cobertura data-file directory -->
+		<delete dir="${coberturaDataFileDir}" />
+		<mkdir dir="${coberturaDataFileDir}" />
+		
+		<!-- instrument the classes excluding junit test-classes -->
+		<cobertura-instrument todir="${instrumentedClassesDir}" 
+			datafile="${coberturaDataFileDir}/${coberturaDataFile}">
+		    <fileset dir="${buildDir}">
+		        <include name="**/*.class"/>
+		    	<exclude name="**/Test*.class" />
+		    </fileset>
+		</cobertura-instrument>
+	</target>
+	
+	<!-- Generate code coverage report -->
+	<target name="code-coverage-report">
+		
+		<!-- delete/create coverage report directory -->
+		<delete dir="${genReportsDir}/${coverageReportDir}"/>
+		<mkdir dir="${genReportsDir}/${coverageReportDir}"/>
+		
+		<!-- create the coverage report -->
+		<cobertura-report format="html" 
+			datafile="${coberturaDataFileDir}/${coberturaDataFile}" 
+			destdir="${genReportsDir}/${coverageReportDir}">
+			<fileset dir="${javaDir}">
+				<include name="**/*.java" />
+				<exclude name="**/Test*.java" />
+				<exclude name="**/Mock*.java" />
+				<exclude name="**/GolfDatabaseTestCase.java" />
+			</fileset>
+		</cobertura-report>
+	</target>
+	
+	<!-- Used to import the latest course slope/rating data into the DEV 
+	     database -->
+	<target name="import-sloperating-data-dev">
+		<property name="region" value="development" />
+		<property name="mode" value="1" />
+		<antcall target="import-tool" />
+	</target>
+	
+	<!-- Used to import the latest course slope/rating data into the PROD 
+	     database -->
+	<target name="import-sloperating-data-prod">
+		<property name="region" value="production" />
+		<property name="mode" value="1" />
+		<antcall target="import-tool" />
+	</target>	
+
+	<!-- Prints the unique tee color/names from the extract file to the
+		 console -->
+	<target name="print-unique-teecolors">
+		<property name="mode" value="0" />
+		<antcall target="import-tool" />
+	</target>
+	
+	<!-- Used to import the latest course slope/rating data -->
+	<target name="import-tool" depends="compile">
+		<java classname="${importtoolclass}" fork="true">
+			<sysproperty key="extractlocation" value="${basedir}/${extractlocation}" />
+			<sysproperty key="jdbc.url" value="${jdbc.url}/${jdbc.database-prefix}${region}" />
+			<sysproperty key="jdbc.username" value="${jdbc.username}" />
+			<sysproperty key="jdbc.password" value="${jdbc.password}" />
+			<sysproperty key="jdbc.driver" value="${jdbc.driver}" />
+			<sysproperty key="hbm.mapping.dir" value="${basedir}/${generatedMappingDir}" />
+			<sysproperty key="mode" value="${mode}" />
+			<sysproperty key="stdteecolors" value="${standardteecolors}" />
+			<classpath>
+				<!-- put classes folder into classpath -->
+				<pathelement location="${buildDir}" />
+				<!-- put dependent jar files into the classpath -->
+				<path refid="dist.project.class.path" />
+			</classpath>
+		</java>
+	</target>
+	
+	<!-- Drops the player data -->
+	<target name="drop-player-data-dev">
+		<sql
+			driver="${jdbc.driver}"
+			url="${jdbc.url}/${jdbc.database-prefix}development"
+			userid="${jdbc.username}"
+			password="${jdbc.password}"
+			classpathref="dist.project.class.path">
+			delete from scorecard_summary;
+			delete from score;
+			delete from scorecard;
+			delete from player;
+			delete from user_roles;
+		</sql>
+	</target>
+	
+	<!-- Used to load system with players into the DEV database -->
+	<target name="player-load-tool-dev">
+		<property name="region" value="development" />
+		<antcall target="player-load-tool" />
+	</target>
+	
+	<!-- Used to load system with players into the PROD database -->
+	<target name="player-load-tool-prod">
+		<property name="region" value="production" />
+		<antcall target="player-load-tool" />
+	</target>
+	
+	<!-- Used to load system with players -->
+	<target name="player-load-tool" depends="compile">
+		<jar destfile="${distDir}/player-load-tool.jar">
+			<fileset dir="${buildDir}">
+				<include name="**/*.class" />
+			</fileset>
+			<fileset dir="${generatedMappingDir}">
+				<include name="**/*.hbm.xml" />
+			</fileset>
+			<fileset dir="${configDir}/spring/non-container">
+				<include name="beans.xml" />
+			</fileset>
+			<fileset dir="${srcDir}/literal">
+				<include name="**/*.*" />
+			</fileset>
+		</jar>
+		<java classname="${playerloadtoolclass}" maxmemory="1024M" fork="true">
+			<sysproperty key="jdbc.url" value="${jdbc.url}/${jdbc.database-prefix}${region}" />
+			<sysproperty key="jdbc.username" value="${jdbc.username}" />
+			<sysproperty key="jdbc.password" value="${jdbc.password}" />
+			<sysproperty key="jdbc.driver" value="${jdbc.driver}" />
+			<sysproperty key="hbm.mapping.dir" value="${basedir}/${generatedMappingDir}" />
+			<sysproperty key="mode" value="${mode}" />
+			<classpath>
+				<!-- put classes folder onto classpath -->
+				<pathelement location="${buildDir}" />
+				<!-- put dependent jar files onto the classpath -->
+				<path refid="dist.project.class.path" />
+				<!-- put main application jar onto the classpath -->
+				<filelist dir="${distDir}" files="player-load-tool.jar" />
+			</classpath>
+		</java>
+	</target>
+</project> 
